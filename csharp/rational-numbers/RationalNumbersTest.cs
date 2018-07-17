@@ -10,103 +10,103 @@ public class RationalNumbersTest
         Assert.Equal(new RationalNumber(7, 6), new RationalNumber(1, 2) + (new RationalNumber(2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Add_a_positive_rational_number_and_a_negative_rational_number()
     {
         Assert.Equal(new RationalNumber(-1, 6), new RationalNumber(1, 2) + (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Add_two_negative_rational_numbers()
     {
         Assert.Equal(new RationalNumber(-7, 6), new RationalNumber(-1, 2) + (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Add_a_rational_number_to_its_additive_inverse()
     {
         Assert.Equal(new RationalNumber(0, 1), new RationalNumber(1, 2) + (new RationalNumber(-1, 2)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Subtract_two_positive_rational_numbers()
     {
         Assert.Equal(new RationalNumber(-1, 6), new RationalNumber(1, 2) - (new RationalNumber(2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Subtract_a_positive_rational_number_and_a_negative_rational_number()
     {
         Assert.Equal(new RationalNumber(7, 6), new RationalNumber(1, 2) - (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Subtract_two_negative_rational_numbers()
     {
         Assert.Equal(new RationalNumber(1, 6), new RationalNumber(-1, 2) - (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Subtract_a_rational_number_from_itself()
     {
         Assert.Equal(new RationalNumber(0, 1), new RationalNumber(1, 2) - (new RationalNumber(1, 2)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiply_two_positive_rational_numbers()
     {
         Assert.Equal(new RationalNumber(1, 3), new RationalNumber(1, 2) * (new RationalNumber(2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiply_a_negative_rational_number_by_a_positive_rational_number()
     {
         Assert.Equal(new RationalNumber(-1, 3), new RationalNumber(-1, 2) * (new RationalNumber(2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiply_two_negative_rational_numbers()
     {
         Assert.Equal(new RationalNumber(1, 3), new RationalNumber(-1, 2) * (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiply_a_rational_number_by_its_reciprocal()
     {
         Assert.Equal(new RationalNumber(1, 1), new RationalNumber(1, 2) * (new RationalNumber(2, 1)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiply_a_rational_number_by_1()
     {
         Assert.Equal(new RationalNumber(1, 2), new RationalNumber(1, 2) * (new RationalNumber(1, 1)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiply_a_rational_number_by_0()
     {
         Assert.Equal(new RationalNumber(0, 1), new RationalNumber(1, 2) * (new RationalNumber(0, 1)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Divide_two_positive_rational_numbers()
     {
         Assert.Equal(new RationalNumber(3, 4), new RationalNumber(1, 2) / (new RationalNumber(2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Divide_a_positive_rational_number_by_a_negative_rational_number()
     {
         Assert.Equal(new RationalNumber(-3, 4), new RationalNumber(1, 2) / (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Divide_two_negative_rational_numbers()
     {
         Assert.Equal(new RationalNumber(3, 4), new RationalNumber(-1, 2) / (new RationalNumber(-2, 3)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Divide_a_rational_number_by_1()
     {
         Assert.Equal(new RationalNumber(1, 2), new RationalNumber(1, 2) / (new RationalNumber(1, 1)));
