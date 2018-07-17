@@ -25,7 +25,6 @@ public class School
         var list = new List<string>();
         foreach(var grade in grades)
         {
-
             roster.AddRange(Grade(grade));
         }
         return roster;
@@ -42,11 +41,4 @@ public class School
 
         return classRoster;
     }
-}
-
-public class Student
-{
-    private string _name;
-    private int _grade;
-    
 }

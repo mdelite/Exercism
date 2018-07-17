@@ -5,3 +5,4 @@
 **/.vscode/*
 **/.vs
 *.sln
+.solution.json
