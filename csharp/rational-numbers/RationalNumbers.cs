@@ -56,25 +56,30 @@ public struct RationalNumber
 
     public RationalNumber Mul(RationalNumber r)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        Numerator = Numerator * r.Numerator;
+        Denominator = Denominator * r.Denominator;
+
+        return this.Reduce();
     }
 
     public static RationalNumber operator *(RationalNumber r1, RationalNumber r2)
     {
-        var n = r1.Numerator * r2.Numerator;
-        var d = r1.Denominator * r2.Denominator;
-
-        return new RationalNumber(n, d).Reduce();
+        return r1.Mul(r2);
     }
 
     public RationalNumber Div(RationalNumber r)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var flip = r.Numerator < 0 ? -1 : 1;
+
+        Numerator = Numerator * r.Denominator * flip;
+        Denominator = Denominator * r.Numerator * flip;
+
+        return this.Reduce();
     }
 
     public static RationalNumber operator /(RationalNumber r1, RationalNumber r2)
     {
-        return r1 * new RationalNumber(r2.Denominator, r2.Numerator);
+        return r1.Div(r2);
     }
 
     public RationalNumber Abs()
