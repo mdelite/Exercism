@@ -24,29 +24,34 @@ public struct RationalNumber
        
         Numerator = numerator * flip;
         Denominator = denominator * flip;
+
+        this.Reduce();
     }
 
     public RationalNumber Add(RationalNumber r)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        Numerator = Numerator * r.Denominator + r.Numerator * Denominator;
+        Denominator = Denominator * r.Denominator;
+
+        return this.Reduce();
     }
 
     public static RationalNumber operator +(RationalNumber r1, RationalNumber r2)
     {
-        var n = r1.Numerator * r2.Denominator + r2.Numerator * r1.Denominator;
-        var d = r1.Denominator * r2.Denominator;
-
-        return new RationalNumber(n, d).Reduce();
+        return r1.Add(r2);
     }
 
     public RationalNumber Sub(RationalNumber r)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        Numerator = Numerator * r.Denominator - r.Numerator * Denominator;
+        Denominator = Denominator * r.Denominator;
+
+        return this.Reduce();
     }
 
     public static RationalNumber operator -(RationalNumber r1, RationalNumber r2)
     {
-        return r1 + new RationalNumber(r2.Numerator * -1, r2.Denominator);
+        return r1.Sub(r2);
     }
 
     public RationalNumber Mul(RationalNumber r)
