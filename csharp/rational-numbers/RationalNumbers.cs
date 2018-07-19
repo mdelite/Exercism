@@ -14,15 +14,16 @@ public static class RealNumberExtension
 public struct RationalNumber
 {
 
-    private int _numerator, _denominator;
+    public int Numerator{get; private set;}
+    public int Denominator{get; private set;}
     public RationalNumber(int numerator, int denominator)
     {
         var flip = 1;
-
+        if(denominator == 0) throw new DivideByZeroException();
         if(denominator < 0) flip = -1;
        
-        _numerator = numerator * flip;
-        _denominator = denominator * flip;
+        Numerator = numerator * flip;
+        Denominator = denominator * flip;
     }
 
     public RationalNumber Add(RationalNumber r)
@@ -32,8 +33,8 @@ public struct RationalNumber
 
     public static RationalNumber operator +(RationalNumber r1, RationalNumber r2)
     {
-        var n = r1._numerator * r2._denominator + r2._numerator * r1._denominator;
-        var d = r1._denominator * r2._denominator;
+        var n = r1.Numerator * r2.Denominator + r2.Numerator * r1.Denominator;
+        var d = r1.Denominator * r2.Denominator;
 
         return new RationalNumber(n, d).Reduce();
     }
@@ -45,7 +46,7 @@ public struct RationalNumber
 
     public static RationalNumber operator -(RationalNumber r1, RationalNumber r2)
     {
-        return r1 + new RationalNumber(r2._numerator * -1, r2._denominator);
+        return r1 + new RationalNumber(r2.Numerator * -1, r2.Denominator);
     }
 
     public RationalNumber Mul(RationalNumber r)
@@ -55,8 +56,8 @@ public struct RationalNumber
 
     public static RationalNumber operator *(RationalNumber r1, RationalNumber r2)
     {
-        var n = r1._numerator * r2._numerator;
-        var d = r1._denominator * r2._denominator;
+        var n = r1.Numerator * r2.Numerator;
+        var d = r1.Denominator * r2.Denominator;
 
         return new RationalNumber(n, d).Reduce();
     }
@@ -68,14 +69,14 @@ public struct RationalNumber
 
     public static RationalNumber operator /(RationalNumber r1, RationalNumber r2)
     {
-        return r1 * new RationalNumber(r2._denominator, r2._numerator);
+        return r1 * new RationalNumber(r2.Denominator, r2.Numerator);
     }
 
     public RationalNumber Abs()
     {
-        if(_numerator < 0)
+        if(Numerator < 0)
         {
-            _numerator *= -1;
+            Numerator *= -1;
         }
 
         return this;
@@ -83,57 +84,37 @@ public struct RationalNumber
 
     public RationalNumber Reduce()
     {
-        if(_numerator == 0) _denominator = 1;
+        if(Numerator == 0) Denominator = 1;
 
-        var gcd = GCD(_numerator, _denominator);
+        var gcd = GCD(Numerator, Denominator);
 
-        _numerator /= gcd;
-        _denominator /= gcd;
+        Numerator /= gcd;
+        Denominator /= gcd;
 
         return this;
     }
 
     public RationalNumber Exprational(int power)
     {
-        _numerator = (int)Math.Pow(_numerator, power);
-        _denominator = (int)Math.Pow(_denominator, power);
+        Numerator = (int)Math.Pow(Numerator, power);
+        Denominator = (int)Math.Pow(Denominator, power);
 
         return this;
     }
 
     public double Expreal(int baseNumber)
     {
-        var val = Math.Pow(baseNumber, _numerator);
-        val = Math.Pow(val, 1D / _denominator);
+        var val = Math.Pow(baseNumber, Numerator);
+        val = Math.Pow(val, 1D / Denominator);
 
         return val;
     }
 
     private int GCD(int n1, int n2)
     {
-        var mults1 = Multiples(Math.Abs(n1));
-        var mults2 = Multiples(Math.Abs(n2));
+        var gcd = n1 % n2 == 0 ? n2 : GCD(n2, n1 % n2);
 
-        var common = mults1.Intersect(mults2);
-
-        return common.Max();
+        return Math.Abs(gcd);
     }
 
-    private static IEnumerable<int> Multiples(int number)
-    {
-        var mults = new List<int>() {1};
-
-        var c = 2;
-
-        // lazy!  use primes.
-        while(c < number)
-        {
-            if(number % c == 0) mults.Add(c);
-            c++;
-        }
-
-        mults.Add(number);
-
-        return mults;
-    }
 }
