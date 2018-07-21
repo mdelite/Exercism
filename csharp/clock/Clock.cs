@@ -2,43 +2,26 @@ using System;
 
 public struct Clock
 {
-    private int _hours;
     private int _minutes;
+
+    private const int minutesPerDay = 24 * 60;
     public Clock(int hours, int minutes)
     {
-        _hours = hours;
-        _minutes = minutes;
-
+        _minutes = hours * 60 + minutes;
         this.TimeFix();
     }
 
     private void TimeFix()
     {
-        var addHours = 0;
-
-        while(_minutes < 0)
-        {
-            _minutes += 60;
-            _hours -= 1;
-        }
-
-        addHours += _minutes / 60;
-        _hours = Fix(_hours + addHours, 24);
-        _minutes = Fix(_minutes, 60); 
-    }
-
-    private static int Fix(int time, int v)
-    {
-        var remainder = Math.Abs(time % v);
-        
-        return time < 0 && remainder != 0 ? v - remainder : remainder;
+        while(_minutes < 0 ) _minutes += minutesPerDay;
+        while(_minutes >= minutesPerDay) _minutes -= minutesPerDay;
     }
 
     public int Hours
     {
         get
         {
-            return _hours;
+            return _minutes / 60;
         }
     }
 
@@ -46,7 +29,7 @@ public struct Clock
     {
         get
         {
-            return _minutes;
+            return _minutes % 60;
         }
     }
 
