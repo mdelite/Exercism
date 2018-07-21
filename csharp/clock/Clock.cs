@@ -6,23 +6,32 @@ public struct Clock
     private int _minutes;
     public Clock(int hours, int minutes)
     {
+        _hours = hours;
+        _minutes = minutes;
+
+        this.TimeFix();
+    }
+
+    private void TimeFix()
+    {
         var addHours = 0;
 
-        while(minutes < 0)
+        while(_minutes < 0)
         {
-            minutes += 60;
-            hours -= 1;
+            _minutes += 60;
+            _hours -= 1;
         }
 
-        addHours += minutes / 60;
-        _hours = Fix(hours + addHours, 24);
-        _minutes = Fix(minutes, 60); 
+        addHours += _minutes / 60;
+        _hours = Fix(_hours + addHours, 24);
+        _minutes = Fix(_minutes, 60); 
     }
 
     private static int Fix(int time, int v)
     {
         var remainder = Math.Abs(time % v);
-        return time < 0 ? v - remainder : remainder;
+        
+        return time < 0 && remainder != 0 ? v - remainder : remainder;
     }
 
     public int Hours
@@ -44,20 +53,7 @@ public struct Clock
     public Clock Add(int minutesToAdd)
     {
         _minutes += minutesToAdd;
-
-        while(_minutes < 0)
-        {
-            _minutes += 60;
-            _hours -= 1;
-        }
-
-        while(_hours < 0)
-        {
-            _hours += 24;
-        }
-
-        _hours = Fix(_hours + (_minutes / 60), 24);
-        _minutes = Fix(_minutes, 60);
+        this.TimeFix();
         
         return this;        
     }
@@ -66,6 +62,6 @@ public struct Clock
 
     public override string ToString()
     {
-        return $"{_hours.ToString("D2")}:{_minutes.ToString("D2")}";
+        return $"{this.Hours.ToString("D2")}:{this.Minutes.ToString("D2")}";
     }
 }
