@@ -8,31 +8,19 @@ public class BinarySearch
 
     public BinarySearch(int[] input)
     {
-        _searchArray = new int[input.Length];
-        Array.Copy(input, _searchArray, input.Length);  
+        _searchArray = input;  
     }
 
-    public int Find(int value)
-    {
-        if(_searchArray.Length < 1) return -1;
+    public int Find(int value) => Search(value, 0, _searchArray.Length - 1);
 
-        var mid = _searchArray.Length / 2;
-        var val = _searchArray[mid];
-      
-        if(val == value)
-        {
-            return mid + loc;
-        }
-        else if(_searchArray.Length > 1 && value < val)
-        {
-            _searchArray = _searchArray.Take(mid).ToArray();
-            return Find(value);
-        } else if(_searchArray.Length > 1 && value > val)
-        {
-            _searchArray = _searchArray.Skip(mid).ToArray();
-            loc += mid;
-            return Find(value);
-        } 
-        return -1;
+    private int Search(int value, int min, int max)
+    {
+        if(max < min) return -1;
+
+        var i = (min + max) / 2;
+
+        if (value > _searchArray[i]) return Search(value, i + 1, max);
+        if (value < _searchArray[i]) return Search(value, min, i - 1);
+        return i;
     }
 }
