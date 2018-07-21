@@ -12,33 +12,21 @@ public enum Plant
 
 public class KindergartenGarden
 {   
-    private List<Plant> _row1;
-    private List<Plant> _row2;
+    private string _row1;
+    private string _row2;
 
     private IList<string> _students;
 
     public KindergartenGarden(string diagram)
     {
+        //default class roster.
         var students = new[] { "Alice", "Bob", "Charlie", "David", "Eve",
-            "Fred", "Ginny", "Harriet", "Ileana", "Joseph",
-             "Kincaid", "Larry"};
+        "Fred", "Ginny", "Harriet", "Ileana", "Joseph", "Kincaid", "Larry"};
              
         _students = students.ToList();
 
-        var r1 = diagram.Split("\n")[0];
-        var r2 = diagram.Split("\n")[1];
-
-        var row1 = new List<Plant>();
-        var row2 = new List<Plant>();
-        for(var i = 0; i < r1.Length; i++)
-        {
-            row1.Add(GetPlant(r1[i]));
-            row2.Add(GetPlant(r2[i]));
-        }
-        
-        _row1 = row1;
-        _row2 = row2;
-
+        _row1 = diagram.Split("\n")[0];
+        _row2 = diagram.Split("\n")[1];
     }
 
     public KindergartenGarden(string diagram, IEnumerable<string> students) : this(diagram)
@@ -48,19 +36,23 @@ public class KindergartenGarden
 
     public IEnumerable<Plant> Plants(string student)
     {
-        var studentIndex = _students.IndexOf(student);
-        var row1 = new List<Plant>();
-        var row2 = new List<Plant>();
+        var i = _students.IndexOf(student);
 
-        for(var i = studentIndex * 2; i < studentIndex * 2 + 2; i++)
+        var plants = _row1.Substring(i * 2, 2) + _row2.Substring(i * 2, 2);
+
+        return GetPlants(plants);
+    }
+
+    private IEnumerable<Plant> GetPlants(string p)
+    {
+        var plants = new List<Plant>();
+
+        foreach(var c in p)
         {
-            row1.Add(_row1[i]);
-            row2.Add(_row2[i]);
+            plants.Add(GetPlant(c));
         }
 
-        row1.AddRange(row2);
-
-        return row1.ToArray();
+        return plants;
     }
 
     private Plant GetPlant(char v)
@@ -76,7 +68,7 @@ public class KindergartenGarden
             case 'C':
                 return Plant.Clover;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"Plant type '{v}' is not defined.");
         }
     }
 }
