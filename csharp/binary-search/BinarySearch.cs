@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Linq;
 
 public class BinarySearch
 {
-    private int[] _searchArray;
-    private int loc = 0;
+    private int[] _ary;
 
     public BinarySearch(int[] input)
     {
-        _searchArray = input;  
+        _ary = input;  
     }
 
-    public int Find(int value) => Search(value, 0, _searchArray.Length - 1);
+    public int Find(int value) => Search(value, 0, _ary.Length - 1);
 
     private int Search(int value, int min, int max)
     {
@@ -19,8 +17,8 @@ public class BinarySearch
 
         var i = (min + max) / 2;
 
-        if (value > _searchArray[i]) return Search(value, i + 1, max);
-        if (value < _searchArray[i]) return Search(value, min, i - 1);
+        if (value > _ary[i]) return Search(value, i + 1, max);
+        if (value < _ary[i]) return Search(value, min, i - 1);
         return i;
     }
 }
