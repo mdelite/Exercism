@@ -4,14 +4,14 @@ using System.Collections.Generic;
 [Flags]
 public enum Allergen
 {
-    Eggs = 0x1,
-    Peanuts = 0x2,
-    Shellfish = 0x4,
-    Strawberries = 0x8,
-    Tomatoes = 0x10,
-    Chocolate = 0x20,
-    Pollen = 0x40,
-    Cats = 0x80
+    Eggs            = 0x0001,
+    Peanuts         = 0x0002,
+    Shellfish       = 0x0004,
+    Strawberries    = 0x0008,
+    Tomatoes        = 0x0010,
+    Chocolate       = 0x0020,
+    Pollen          = 0x0040,
+    Cats            = 0x0080
 }
 
 public class Allergies
@@ -31,9 +31,9 @@ public class Allergies
     {
         var found = new List<Allergen>();
 
-        for(var i = 0x0001; i <= 0x0080; i <<= 1 )
+        foreach(Allergen p in Enum.GetValues(typeof(Allergen)))
         {
-            if(_allergen.HasFlag((Allergen)i)) found.Add((Allergen)i);
+            if(_allergen.HasFlag(p)) found.Add(p);
         }
 
         return found.ToArray();
