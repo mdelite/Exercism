@@ -11,34 +11,38 @@ public class SaddlePoints
     {
         var saddles = new List<(int, int)>();
 
-        var colMin = new int?[_matrix.GetLength(1)];   
+        //array to hold col min values so we only look once.
+        var colMin = new int?[_matrix.GetLength(1)];
+
+        //iterate through each row and find max value
         for(var r = 0; r < _matrix.GetLength(0); r++)
         {
-            var row = Enumerable.Range(0, _matrix.GetUpperBound(1) + 1)
-                      .Select(i => _matrix[r, i])
-                      .ToArray();
+            var rowMax = GetRowValues(r).Max();
 
-            var rowMax = row.Max();
-
+            //check each val in row. add to list if it is equal to rows max and cols min.
             for(var c = 0; c < _matrix.GetLength(1); c++)
             {
-                if(colMin[c] == null) colMin[c] = GetColumnMin(c);
+                if(colMin[c] == null) colMin[c] = GetColumnValues(c).Min();
 
                 var val = _matrix[r, c];
 
                 if(val == rowMax && val == colMin[c]) saddles.Add((r, c));
             }
         }
-        
         return saddles;
     }
 
-    private int GetColumnMin(int columnIndex)
+    private int[] GetRowValues(int index)
     {
-        var col = Enumerable.Range(0, _matrix.GetUpperBound(0) + 1)
-            .Select(i => _matrix[i, columnIndex])
+        return Enumerable.Range(0, _matrix.GetUpperBound(1) + 1)
+            .Select(i => _matrix[index, i])
             .ToArray();
-        
-        return col.Min();
+    }
+
+    private int[] GetColumnValues(int index)
+    {
+        return Enumerable.Range(0, _matrix.GetUpperBound(0) + 1)
+            .Select(i => _matrix[i, index])
+            .ToArray();
     }
 }
