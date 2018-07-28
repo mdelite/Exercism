@@ -3,54 +3,92 @@ using System.Text.RegularExpressions;
 
 public class Markdown
 {
-    private static bool _isList = false;
-
     public static string Parse(string markdown)
     {
         var lines = markdown.Split('\n');
         var result = "";
-        _isList = false;
+        var isList = false;
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach(var line in lines)
         {
-            var lineResult = ParseLine(lines[i]);
-            result += lineResult;
+            switch(line.Substring(0,1))
+            {
+                case "#":
+                    result += ParseHeader(line, isList);
+                    break;
+                case "*":
+                    result += ParseList(line, ref isList);
+                    break;
+                default:
+                    result += ParseParagraph(line, isList);
+                    break;
+            }
         }
 
-        if (_isList)
+        if (isList) result += "</ul>";
+        
+        return result; 
+    }
+
+    private static string ParseParagraph(string line, bool isList)
+    {
+        var innerHtml = ParseText(line);
+        if (!isList)
         {
-            return result + "</ul>";
+            innerHtml = Wrap(innerHtml, "p");
         }
         else
         {
-            return result;
+            innerHtml = "</ul>" + innerHtml;
         }
+
+        return innerHtml;
     }
 
-    private static string ParseLine(string markdown)
+    private static string ParseList(string line, ref bool isList)
     {
-        var result = ParseHeader(markdown);
-
-        if (result == null)
+        var innerHtml = ParseText(line.Substring(2));
+        innerHtml = Wrap(innerHtml, "li");
+        if (!isList)
         {
-            result = ParseLineItem(markdown);
+            isList = true;
+            innerHtml = "<ul>" + innerHtml;
         }
 
-        if (result == null)
+        return innerHtml;
+    }
+
+    private static string ParseHeader(string line, bool isList)
+    {
+        var count = HeaderCount(line);
+        var headerTag = "h" + count;
+
+        var innerHtml = Wrap(line.Substring(count + 1), headerTag);
+        if (isList) innerHtml = "</ul>" + innerHtml;
+
+        return innerHtml;
+    }
+
+    private static int HeaderCount(string markdown)
+    {
+        var count = 0;
+
+        for (int i = 0; i < markdown.Length; i++)
         {
-            result = ParseParagraph(markdown);
+            if (markdown[i] == '#')
+            {
+                count++;
+            }
+            else
+            {
+                break;
+            }
         }
 
-        if (result == null)
-        {
-            throw new ArgumentException("Invalid markdown");
-        }
-
-        return result;
+        return count;
     }
 
     private static string Wrap(string text, string tag) => $"<{tag}>{text}</{tag}>";
-    private static bool IsTag(string text, string tag) => text.StartsWith($"<{tag}>");
 
     private static string Parse(string markdown, string delimiter, string tag)
     {
@@ -59,86 +97,11 @@ public class Markdown
         return Regex.Replace(markdown, pattern, replacement);
     }
 
-    private static string ParseText(string markdown, bool list)
+    private static string ParseText(string markdown)
     {
         markdown = Parse(markdown, "__", "strong");
         markdown = Parse(markdown, "_", "em");
 
-        if (list)
-        {
-            return markdown;
-        }
-        else
-        {
-            return Wrap(markdown, "p");
-        }
+        return markdown;
     }
-
-    private static string ParseHeader(string markdown)
-    {
-        var count = 0;
-
-        for (int i = 0; i < markdown.Length; i++)
-        {
-            if (markdown[i] == '#')
-            {
-                count += 1;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        if (count == 0)
-        {
-            return null;
-        }
-
-        var headerTag = "h" + count;
-        var headerHtml = Wrap(markdown.Substring(count + 1), headerTag);
-
-        if (_isList)
-        {
-            return "</ul>" + headerHtml;
-        }
-        else
-        {
-            return headerHtml;
-        }
-    }
-
-    private static string ParseLineItem(string markdown)
-    {
-        if (markdown.StartsWith("*"))
-        {
-            var innerHtml = Wrap(ParseText(markdown.Substring(2), true), "li");
-
-            if (_isList)
-            {
-                return innerHtml;
-            }
-            else
-            {
-                _isList = true;
-                return "<ul>" + innerHtml;
-            }
-        }
-
-        return null;
-    }
-
-    private static string ParseParagraph(string markdown)
-    {
-        if (!_isList)
-        {
-            return ParseText(markdown, _isList);
-        }
-        else
-        {
-            return "</ul>" + ParseText(markdown, _isList);
-        }
-    }
-
-
 }
