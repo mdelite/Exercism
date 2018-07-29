@@ -3,7 +3,9 @@ using System;
 public class SpaceAge
 {
     private long _age;  // age in seconds
+    private const long earthPeriod = 31557600; // earth period in seconds
 
+    // multiplier of planets period compared to earth
     private const double earth = 1.0;
     private const double mercury = 0.2408467;
     private const double venus = 0.61519726;
@@ -13,7 +15,6 @@ public class SpaceAge
     private const double uranus = 84.016846;
     private const double neptune = 164.79132;
 
-    private const long earthPeriod = 31557600; // earth period in seconds
     public SpaceAge(long seconds)
     {
         _age = seconds;
@@ -25,18 +26,11 @@ public class SpaceAge
     }
 
     public double OnEarth() => GetYears(earth);
-
     public double OnMercury() => GetYears(mercury);
-
     public double OnVenus() => GetYears(venus);
-
     public double OnMars() => GetYears(mars);
-
     public double OnJupiter() => GetYears(jupiter);
-
     public double OnSaturn() => GetYears(saturn);
-
     public double OnUranus() => GetYears(uranus);
-
     public double OnNeptune() => GetYears(neptune);
 }
