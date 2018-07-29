@@ -2,47 +2,64 @@ using System;
 
 public class SpaceAge
 {
+    private long _age;  // age in seconds
+
+    private const long earthPeriod = 31557600; // earth period in seconds
     public SpaceAge(long seconds)
     {
+        _age = seconds;
+    }
+
+    private double GetYears(double multiplier)
+    {
+        return _age / (earthPeriod * multiplier);
     }
 
     public double OnEarth()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 1.0;
+        return GetYears(multiplier);
     }
 
     public double OnMercury()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 0.2408467;
+        return GetYears(multiplier);
     }
 
     public double OnVenus()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 0.61519726;
+        return GetYears(multiplier);
     }
 
     public double OnMars()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 1.8808158;
+        return GetYears(multiplier);
     }
 
     public double OnJupiter()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 11.862615;
+        return GetYears(multiplier);
     }
 
     public double OnSaturn()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 29.447498;
+        return GetYears(multiplier);
     }
 
     public double OnUranus()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 84.016846;
+        return GetYears(multiplier);
     }
 
     public double OnNeptune()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var multiplier = 164.79132;
+        return GetYears(multiplier);
     }
 }
