@@ -9,14 +9,18 @@ public static class BookStore
     {
         var total = 0.0;
         var cart = books.ToList();
-        var inCart = cart.Count();
+        var cartCount = cart.Count();
         var groups = new List<int>();
 
-        while(inCart > 0)
+        while(cartCount > 0)
         {
+            // find max group of distinct books
             var distinct = cart.Distinct().ToList();
             var c = distinct.Count();
 
+            // if we find a group of 3 and we have previously
+            // found a group of 5, remove the 5 group and add
+            // two groups of 4 as it is a better deal. 
             if(c == 3 && groups.Contains(5))
             {
                 groups.Remove(5);
@@ -27,15 +31,18 @@ public static class BookStore
                 groups.Add(c);
             }
 
+            // remove the distinct books that we found from the cart.
             foreach(var d in distinct)
             {
                 cart.Remove(d);
             }
 
-            inCart = cart.Count();
+            // update the cart count
+            cartCount = cart.Count();
 
         }
 
+        // sum up our total.
         foreach(var group in groups)
         {
             total += group * Cost * GetDiscount(group);
@@ -56,8 +63,9 @@ public static class BookStore
                 return 0.90;
             case 4:
                 return 0.80;
+            case 5:
+                return 0.75;
             default:
-                if(count >= 5) return 0.75;
                 throw new ArgumentException();
         }
     }
