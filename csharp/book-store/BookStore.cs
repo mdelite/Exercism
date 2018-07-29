@@ -10,11 +10,22 @@ public static class BookStore
         var total = 0.0;
         var cart = books.ToList();
         var inCart = cart.Count();
+        var groups = new List<int>();
 
         while(inCart > 0)
         {
             var distinct = cart.Distinct().ToList();
-            var count = distinct.Count();
+            var c = distinct.Count();
+
+            if(c == 3 && groups.Contains(5))
+            {
+                groups.Remove(5);
+                groups.AddRange( new int[] {4,4});
+            }
+            else
+            {
+                groups.Add(c);
+            }
 
             foreach(var d in distinct)
             {
@@ -23,7 +34,11 @@ public static class BookStore
 
             inCart = cart.Count();
 
-            total += count * Cost * GetDiscount(count);
+        }
+
+        foreach(var group in groups)
+        {
+            total += group * Cost * GetDiscount(group);
         }
 
         return total;
