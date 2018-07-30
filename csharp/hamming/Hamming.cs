@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 public static class Hamming
 {
@@ -6,13 +7,6 @@ public static class Hamming
     {
         if(firstStrand.Length != secondStrand.Length) throw new ArgumentException("Strands must be the same length");
 
-        var dist = 0;
-
-        for(var i = 0; i < firstStrand.Length; i++)
-        {
-            if(firstStrand[i] != secondStrand[i]) dist++;
-        }
-
-        return dist;
+        return firstStrand.Zip(secondStrand,(x, y) => x == y ? 0 : 1).Sum();
     }
 }
