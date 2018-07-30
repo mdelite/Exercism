@@ -8,8 +8,5 @@ public static class Grains
         return 1UL << n - 1;
     }
 
-    public static ulong Total()
-    {
-        return ulong.MaxValue;
-    }
+    public static ulong Total() => ulong.MaxValue;
 }
