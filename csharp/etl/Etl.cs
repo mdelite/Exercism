@@ -6,7 +6,7 @@ public static class Etl
 {
     public static Dictionary<string, int> Transform(Dictionary<int, string[]> old)
     {
-        var dict = new SortedDictionary<string, int>();
+        var dict = new Dictionary<string, int>();
 
         foreach(var key in old.Keys)
         {
