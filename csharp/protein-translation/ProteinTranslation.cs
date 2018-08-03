@@ -24,18 +24,13 @@ public static class ProteinTranslation
         {"UAG", string.Empty},
         {"UGA", string.Empty}
     };
-    public static string[] Proteins(string strand)
-    {
-        var proteins = new List<string>();
+    public static string[] Proteins(string strand) => strand
+        .Split(3)
+        .Select(x => codons[x])
+        .TakeWhile(x => x != string.Empty)
+        .ToArray();
 
-        for(var i = 0; i <= strand.Length - 3; i += 3)
-        {
-            var codon = strand.Substring(i, 3);
-            var protein = codons[codon];
-            if(protein == string.Empty) return proteins.ToArray();
-
-            proteins.Add(protein);
-        }
-        return proteins.ToArray();
-    }
+    private static IEnumerable<string> Split(this string s, int size) => Enumerable
+        .Range(0, s.Length / size)
+        .Select(x => s.Substring(x * size, size));
 }
