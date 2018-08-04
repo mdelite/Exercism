@@ -105,4 +105,16 @@ public class TriangleTest
     {
         Assert.True(Triangle.IsScalene(0.5, 0.4, 0.6));
     }
+    
+    [Fact]
+    public void Returns_true_if_the_triangle_is_degenerate()
+    {
+        Assert.True(Triangle.IsDegenerate(4, 3, 1));
+    }
+
+    [Fact]
+    public void Returns_false_if_the_triangle_is_not_degenerate()
+    {
+        Assert.False(Triangle.IsDegenerate(3, 3, 1));
+    }
 }
