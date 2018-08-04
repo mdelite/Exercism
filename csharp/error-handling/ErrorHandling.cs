@@ -25,7 +25,9 @@ public static class ErrorHandling
 
     public static void DisposableResourcesAreDisposedWhenExceptionIsThrown(IDisposable disposableObject)
     {
-        disposableObject.Dispose();
-        throw new Exception();
+        using(disposableObject)
+        {
+            throw new Exception();
+        }
     }
 }
