@@ -3,41 +3,48 @@ using System.Text;
 
 public static class BeerSong
 {
-    public static string Recite(int startBottles, int takeDown)
+    public static string Recite(int startBottles, int rounds)
     {
         var song = new StringBuilder();
         var bottles = startBottles;
         
-        for(int i = 0; i < takeDown; i++)
+        for(int round = 1; round <= rounds; round++)
         {
-            var bottleText = BottleString(bottles);
-            var bottlesLeft = BottleString(--bottles);
-            song.Append(string.Format("{0} of beer on the wall, {1} of beer.\n", Char.ToUpper(bottleText[0]) + bottleText.Substring(1), bottleText ));
+            var verse = $"{ThisManyBeer(bottles).Upper()} on the wall, {ThisManyBeer(bottles)}.\n";
+            verse += $"{DoSomethingWithThisMany(ref bottles)}, {ThisManyBeer(bottles)} on the wall.";
 
-            if(bottles > -1)
-            {
-                song.Append(string.Format("Take {0} down and pass it around, {1} of beer on the wall.", bottles == 0 ? "it" : "one" , bottlesLeft));
-            }
-            else
-            {
-                song.Append(string.Format("Go to the store and buy some more, 99 bottles of beer on the wall."));
-                bottles = 99;
-            }
+            if(round < rounds) verse +="\n\n";    // Is another round coming? Give it space.
 
-            // another bottle is a comin'!
-            if(i < takeDown - 1) song.Append("\n\n");
+            song.Append(verse);
         }
 
         return song.ToString();
     }
 
-    private static string BottleString(int v)
+    private static string ThisManyBeer(int bottles)
     {
-        if(v > 0)
+        if(bottles == 0) return "no more bottles of beer";
+
+        return $"{bottles} bottle{(bottles == 1 ? "" : "s" )} of beer";
+    }
+
+    private static string DoSomethingWithThisMany(ref int bottles)
+    {
+        var something = "";
+
+        if(bottles > 0)
         {
-            return string.Format("{0} bottle{1}", v, v == 1 ? "" : "s" );
+            something = $"Take {(bottles > 1 ? "one" : "it" )} down and pass it around";
+            bottles--;
+        }
+        else
+        {
+            something = "Go to the store and buy some more";
+            bottles = 99;
         }
 
-        return "no more bottles";
+        return something;
     }
+
+    private static string Upper(this string s) => Char.ToUpper(s[0]) + s.Substring(1);
 }
