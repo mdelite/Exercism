@@ -4,25 +4,18 @@ using System.Collections.Generic;
 
 public static class Sieve
 {
-    public static int[] Primes(int limit)
+    public static int[] Primes(int limit) => Eratosthenes(limit).ToArray();
+
+    private static IEnumerable<int> Eratosthenes(int limit)
     {
         if(limit < 2) throw new ArgumentOutOfRangeException($"Limit:'{limit}' must be 2 or greater.");
 
-        var sieve =  Enumerable.Range(0,limit + 1).ToArray();
-
-        for(var i = 2; i < sieve.Length; i++)
+        var primeCandidates =  Enumerable.Range(2,limit - 1);
+        while(primeCandidates.Any())
         {
-            if(sieve[i] > 0)
-            {
-                var mult = i + i;
-                while(mult < sieve.Length)
-                {
-                    sieve[mult] = 0;
-                    mult += i;
-                }
-            }
+            var prime = primeCandidates.First();
+            primeCandidates = primeCandidates.Where(x => x % prime != 0);
+            yield return prime;
         }
- 
-        return sieve.Where(p => p >= 2).ToArray();
     }
 }
