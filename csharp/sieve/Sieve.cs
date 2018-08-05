@@ -8,27 +8,21 @@ public static class Sieve
     {
         if(limit < 2) throw new ArgumentOutOfRangeException($"Limit:'{limit}' must be 2 or greater.");
 
-        var primes = new List<int>();
-        var sieve =  Enumerable.Repeat(true, limit + 1).ToArray();
-        sieve[0] = false;
-        sieve[1] = false;
+        var sieve =  Enumerable.Range(0,limit + 1).ToArray();
 
         for(var i = 2; i < sieve.Length; i++)
         {
-            if(sieve[i])
+            if(sieve[i] > 0)
             {
-                primes.Add(i);
-
                 var mult = i + i;
                 while(mult < sieve.Length)
                 {
-                    sieve[mult] = false;
+                    sieve[mult] = 0;
                     mult += i;
                 }
             }
         }
  
-        return primes.ToArray();
+        return sieve.Where(p => p >= 2).ToArray();
     }
-
 }
