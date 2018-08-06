@@ -25,7 +25,7 @@ public class Markdown
             }
         }
 
-        if (isList) result += "</ul>";
+        if(isList) result += "</ul>";
         
         return result; 
     }

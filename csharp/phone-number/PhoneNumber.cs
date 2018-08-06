@@ -9,10 +9,8 @@ public class PhoneNumber
         var clean = new string(phoneNumber.Where(IsNumber).ToArray());
 
         if(clean.Length < 10 || clean.Length > 11)
-            throw new ArgumentException("Valid phone number must be between 10 and 11 digits");
+            throw new ArgumentException("Valid phone number must be 10 or 11 digits");
         
-        
-
         if(clean.Length == 11)
         {
             if(!clean.StartsWith('1')) throw new ArgumentException();
