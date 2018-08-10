@@ -9,12 +9,9 @@ public class Matrix
     {
         _rows = input
             .Split('\n')
-            .Select
-            (
-                x => x.Split(' ')
-                .Select(y => int.Parse(y))
-                .ToArray()
-            )
+            .Select(x => x.Split(' ')
+                .Select(int.Parse)
+                .ToArray())
             .ToList();
     }
 
