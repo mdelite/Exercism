@@ -1,16 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Matrix
 {
+    private List<int[]> _rows;
     public Matrix(string input)
     {
+        _rows = input
+            .Split('\n')
+            .Select
+            (
+                x => x.Split(' ')
+                .Select(y => int.Parse(y))
+                .ToArray()
+            )
+            .ToList();
     }
 
     public int Rows
     {
         get
         {
-            throw new NotImplementedException("You need to implement this function.");
+            return _rows.Count();
         }
     }
 
@@ -18,17 +30,11 @@ public class Matrix
     {
         get
         {
-            throw new NotImplementedException("You need to implement this function.");
+            return _rows[0].Count();
         }
     }
 
-    public int[] Row(int row)
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    public int[] Row(int row) => _rows[row];
 
-    public int[] Column(int col)
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    public int[] Column(int col) => _rows.Select(x => x[col]).ToArray();
 }
