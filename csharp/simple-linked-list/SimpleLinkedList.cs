@@ -5,46 +5,41 @@ using System.Linq;
 
 public class SimpleLinkedList<T> : IEnumerable<T>
 {
-    private List<T> _linkedList;
     public SimpleLinkedList(T value)
     {
-        _linkedList = new List<T>();
-        _linkedList.Add(value);
+        this.Value = value;
     }
 
-    public SimpleLinkedList(IEnumerable<T> values)
+    public SimpleLinkedList(IEnumerable<T> values) : this(values.First())
     {
-        _linkedList = new List<T>();
-        values.ToList().ForEach(x => _linkedList.Add(x));
+        var current = this;
+        foreach(var value in values.Skip(1))
+        {
+            current.Next = new SimpleLinkedList<T>(value);
+            current = current.Next;
+        }
     }
 
-    public T Value 
-    { 
-        get
-        {
-            return _linkedList[0];
-        } 
-    }
-
-    public SimpleLinkedList<T> Next
-    { 
-        get
-        {
-            if(_linkedList.Count() > 1)
-            {
-                return new SimpleLinkedList<T> (_linkedList.Skip(1));
-            }
-            return null;
-        } 
-    }
+    public T Value {get;}
+    
+    public SimpleLinkedList<T> Next {get; private set;}
 
     public SimpleLinkedList<T> Add(T value)
     {
-        _linkedList.Add(value);
+        var current = this;
+        current.Next = new SimpleLinkedList<T>(value);
         return this;
     }
 
-    public IEnumerator<T> GetEnumerator() => _linkedList.GetEnumerator();
+    public IEnumerator<T> GetEnumerator()
+    {
+        var node = this;
+        while(node != null)
+        {
+            yield return node.Value;
+            node = node.Next;
+        }
+    }
 
     IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
 }
