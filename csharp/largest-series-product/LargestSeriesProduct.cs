@@ -1,27 +1,25 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 public static class LargestSeriesProduct
 {
     public static long GetLargestProduct(string digits, int span) 
     {
-        if(span < 0 || span > digits.Length || digits.Where(x => !char.IsNumber(x)).Count() > 0) throw new ArgumentException();
+        if(span < 0) throw new ArgumentException($"'{nameof(span)}' must be greater than 0");
+        if(span > digits.Length) throw new ArgumentException($"'{nameof(span)}' must be less than or equal to the number of digits.");
+        if(!digits.All(char.IsNumber)) throw new ArgumentException($"'{nameof(digits)}' can only contain numbers");
 
-        var max = 0;
-        for(var i = 0; i <= digits.Length - span; i++)
-        {
-            var chunk = digits.Substring(i, span);
-            int chunkProd = GetLargestProduct(chunk);
-
-            if(chunkProd > max) max = chunkProd;
-        }
-        return max;
+        return Products(digits, span).Max();
     }
 
-    private static int GetLargestProduct(string chunk)
+    private static IEnumerable<int> Products(string digits, int span)
     {
-        var prod = 1;
-        chunk.ToList().ForEach(x => prod *= int.Parse(x.ToString()));
-        return prod;
+        for(var i = 0; i <= digits.Length - span; i++)
+        {
+            yield return digits.Substring(i, span)
+                .Select(x => (int)char.GetNumericValue(x))
+                .Aggregate(1, (a, b) => a * b);
+        }
     }
 }
