@@ -8,7 +8,6 @@ public class Anagram
     public Anagram(string baseWord) => _base = baseWord.ToLowerInvariant();
 
     public string[] Anagrams(string[] potentialMatches) => potentialMatches
-            .Where(x => _base != x.ToLowerInvariant())
-            .Where(x => new string(_base.ToLowerInvariant().OrderBy(c => c).ToArray()) == new string(x.ToLowerInvariant().OrderBy(c => c).ToArray()))
+            .Where(x => new string(_base.OrderBy(c => c).ToArray()) == new string(x.ToLowerInvariant().OrderBy(c => c).ToArray()) && _base != x.ToLowerInvariant())
             .ToArray();
 }
