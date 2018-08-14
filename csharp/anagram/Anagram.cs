@@ -1,14 +1,14 @@
 using System;
+using System.Linq;
 
 public class Anagram
 {
-    public Anagram(string baseWord)
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    private string _base;
 
-    public string[] Anagrams(string[] potentialMatches)
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    public Anagram(string baseWord) => _base = baseWord.ToLowerInvariant();
+
+    public string[] Anagrams(string[] potentialMatches) => potentialMatches
+            .Where(x => _base != x.ToLowerInvariant())
+            .Where(x => new string(_base.ToLowerInvariant().OrderBy(c => c).ToArray()) == new string(x.ToLowerInvariant().OrderBy(c => c).ToArray()))
+            .ToArray();
 }

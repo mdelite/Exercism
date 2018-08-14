@@ -12,7 +12,7 @@ public class AnagramTest
         Assert.Empty(sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Detects_two_anagrams()
     {
         var candidates = new[] { "stream", "pigeon", "maters" };
@@ -21,7 +21,7 @@ public class AnagramTest
         Assert.Equal(expected, sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Does_not_detect_anagram_subsets()
     {
         var candidates = new[] { "dog", "goody" };
@@ -29,7 +29,7 @@ public class AnagramTest
         Assert.Empty(sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Detects_anagram()
     {
         var candidates = new[] { "enlists", "google", "inlets", "banana" };
@@ -38,7 +38,7 @@ public class AnagramTest
         Assert.Equal(expected, sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Detects_three_anagrams()
     {
         var candidates = new[] { "gallery", "ballerina", "regally", "clergy", "largely", "leading" };
@@ -47,7 +47,7 @@ public class AnagramTest
         Assert.Equal(expected, sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Does_not_detect_non_anagrams_with_identical_checksum()
     {
         var candidates = new[] { "last" };
@@ -55,7 +55,7 @@ public class AnagramTest
         Assert.Empty(sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Detects_anagrams_case_insensitively()
     {
         var candidates = new[] { "cashregister", "Carthorse", "radishes" };
@@ -64,7 +64,7 @@ public class AnagramTest
         Assert.Equal(expected, sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Detects_anagrams_using_case_insensitive_subject()
     {
         var candidates = new[] { "cashregister", "carthorse", "radishes" };
@@ -73,7 +73,7 @@ public class AnagramTest
         Assert.Equal(expected, sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Detects_anagrams_using_case_insensitive_possible_matches()
     {
         var candidates = new[] { "cashregister", "Carthorse", "radishes" };
@@ -82,7 +82,7 @@ public class AnagramTest
         Assert.Equal(expected, sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Does_not_detect_a_anagram_if_the_original_word_is_repeated()
     {
         var candidates = new[] { "go Go GO" };
@@ -90,7 +90,7 @@ public class AnagramTest
         Assert.Empty(sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Anagrams_must_use_all_letters_exactly_once()
     {
         var candidates = new[] { "patter" };
@@ -98,7 +98,7 @@ public class AnagramTest
         Assert.Empty(sut.Anagrams(candidates));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Capital_word_is_not_own_anagram()
     {
         var candidates = new[] { "Banana" };
