@@ -8,11 +8,12 @@ public static class PrimeFactors
 
     private static IEnumerable<int> GetFactors(long number)
     {
-        for(var i = 2; i <= number; i++ )
+        var n = number;   
+        for(var i = 2; i <= n; i++ )
         {
-            while(number % i == 0)
+            while(n % i == 0)
             {
-                number /= i;
+                n /= i;
                 yield return i;
             }
         }
