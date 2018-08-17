@@ -4,35 +4,18 @@ using System.Linq;
 
 public static class PascalsTriangle
 {
-    public static IEnumerable<IEnumerable<int>> Calculate(int rows)
-    {
-        if(rows < 0) throw new ArgumentOutOfRangeException($"'{nameof(rows)}' must be greater or equal to 0.");
-        
-        List<int[]> triangle = new List<int[]>();
+    public static IEnumerable<IEnumerable<int>> Calculate(int rows) => Enumerable.Range(1, rows).Select(Row);
 
-        for(var i = 0; i < rows; i++)
+    private static IEnumerable<int> Row (int row)
+    {
+        yield return 1;
+        var value = 1;
+
+        for(var i = 1; i < row; i++)
         {
-            if(i == 0)
-            {
-                triangle.Add(new[] { 1 });
-            } 
-            else
-            {
-                var row = Enumerable.Range(0, i + 1)
-                    .Select(x => GetVal(x, triangle[i - 1]))
-                    .ToArray();
-                triangle.Add(row);
-            }
+            value = value * (row - i) / i;
+            yield return value;
         }
-        return triangle;
-    }
-
-    private static int GetVal(int position, int[] previousRow)
-    {
-        var left = position == 0 ? 0 : previousRow[position - 1];
-        var right = position == previousRow.Length ? 0 : previousRow[position];
-
-        return left + right;
     }
 
 }
