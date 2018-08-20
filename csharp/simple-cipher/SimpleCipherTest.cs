@@ -12,28 +12,28 @@ public class SimpleCipherTest
         Assert.Equal(sut.Key.Substring(0, 10), sut.Encode("aaaaaaaaaa"));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Random_key_cipher_can_decode()
     {
         var sut = new SimpleCipher();
         Assert.Equal("aaaaaaaaaa", sut.Decode(sut.Key.Substring(0, 10)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Random_key_cipher_is_reversible_i_e_if_you_apply_decode_in_a_encoded_result_you_must_see_the_same_plaintext_encode_parameter_as_a_result_of_the_decode_method()
     {
         var sut = new SimpleCipher();
         Assert.Equal("abcdefghij", sut.Decode(sut.Encode("abcdefghij")));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Random_key_cipher_key_is_made_only_of_lowercase_letters()
     {
         var sut = new SimpleCipher();
         Assert.Matches("^[a-z]+$", sut.Key);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Substitution_cipher_can_encode()
     {
         var sut = new SimpleCipher("abcdefghij");
