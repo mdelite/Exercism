@@ -1,22 +1,34 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class BinarySearchTree : IEnumerable<int>
 {
+    private int _value;
+    private BinarySearchTree _left;
+    private BinarySearchTree _right;
+
     public BinarySearchTree(int value)
     {
+        this._value = value;
     }
 
     public BinarySearchTree(IEnumerable<int> values)
     {
+        _value = values.FirstOrDefault();
+        var leftValues = values.Skip(1).Where(i => i <= _value);
+        var rightValues = values.Skip(1).Where(i => i > _value);
+        
+        if(leftValues.Count() > 0) _left = new BinarySearchTree(leftValues);
+        if(rightValues.Count() > 0) _right = new BinarySearchTree(rightValues);
     }
-
+ 
     public int Value
     {
         get
         {
-            throw new NotImplementedException("You need to implement this function.");
+            return _value;
         }
     }
 
@@ -24,15 +36,15 @@ public class BinarySearchTree : IEnumerable<int>
     {
         get
         {
-            throw new NotImplementedException("You need to implement this function.");
-        }
+            return _left;
+        } 
     }
 
     public BinarySearchTree Right
     {
         get
         {
-            throw new NotImplementedException("You need to implement this function.");
+            return _right;
         }
     }
 
@@ -43,11 +55,16 @@ public class BinarySearchTree : IEnumerable<int>
 
     public IEnumerator<int> GetEnumerator()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var collection = (new int[]{})
+            .Concat(_left != null ? _left.AsEnumerable() : new int[]{})
+            .Concat(new[] { _value})
+            .Concat(_right != null ? _right.AsEnumerable() : new int[]{});
+
+        foreach(var item in collection)
+        {
+            yield return item;
+        }
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
