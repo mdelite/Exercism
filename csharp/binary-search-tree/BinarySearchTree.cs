@@ -50,7 +50,7 @@ public class BinarySearchTree : IEnumerable<int>
 
     public BinarySearchTree Add(int value)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        throw new NotImplementedException();
     }
 
     public IEnumerator<int> GetEnumerator()
