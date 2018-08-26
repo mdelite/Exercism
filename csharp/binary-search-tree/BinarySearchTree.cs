@@ -5,65 +5,42 @@ using System.Linq;
 
 public class BinarySearchTree : IEnumerable<int>
 {
-    private int _value;
-    private BinarySearchTree _left;
-    private BinarySearchTree _right;
-
-    public BinarySearchTree(int value)
-    {
-        this._value = value;
-    }
+    public BinarySearchTree(int value) => Value = value;
 
     public BinarySearchTree(IEnumerable<int> values)
     {
-        _value = values.FirstOrDefault();
-        var leftValues = values.Skip(1).Where(i => i <= _value);
-        var rightValues = values.Skip(1).Where(i => i > _value);
-        
-        if(leftValues.Count() > 0) _left = new BinarySearchTree(leftValues);
-        if(rightValues.Count() > 0) _right = new BinarySearchTree(rightValues);
+        Value = values.FirstOrDefault();
+
+        foreach(var v in values.Skip(1))
+        {
+            Add(v);
+        }
     }
  
-    public int Value
-    {
-        get
-        {
-            return _value;
-        }
-    }
-
-    public BinarySearchTree Left
-    {
-        get
-        {
-            return _left;
-        } 
-    }
-
-    public BinarySearchTree Right
-    {
-        get
-        {
-            return _right;
-        }
-    }
+    public int Value { get; }
+    public BinarySearchTree Left { get; private set; }
+    public BinarySearchTree Right { get; private set; }
 
     public BinarySearchTree Add(int value)
     {
-        throw new NotImplementedException();
+        if(value <= Value)
+        {
+            Left = Left?.Add(value) ?? new BinarySearchTree(value);
+        }
+        else
+        {
+            Right = Right?.Add(value) ?? new BinarySearchTree(value);
+        }
+        return this;
     }
 
     public IEnumerator<int> GetEnumerator()
     {
-        var collection = (new int[]{})
-            .Concat(_left != null ? _left.AsEnumerable() : new int[]{})
-            .Concat(new[] { _value})
-            .Concat(_right != null ? _right.AsEnumerable() : new int[]{});
+        foreach(var value in Left?.AsEnumerable() ?? Enumerable.Empty<int>()) yield return value;
 
-        foreach(var item in collection)
-        {
-            yield return item;
-        }
+        yield return Value;
+
+        foreach(var value in Right?.AsEnumerable() ?? Enumerable.Empty<int>()) yield return value;
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
