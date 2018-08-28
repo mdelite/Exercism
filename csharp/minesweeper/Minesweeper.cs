@@ -7,34 +7,24 @@ public static class Minesweeper
     private static readonly char mine = '*';
     public static string[] Annotate(string[] input)
     {
-        var minefield = new List<string>();
-        for(var row = 0; row < input.Length; row++)
-        {
-            var minefieldRow = "";
-            for(var col = 0; col < input[row].Length; col++)
-            {
-                minefieldRow += input[row][col] == mine ? mine : MineCount(row, col, ref input);
-            }
-            minefield.Add(minefieldRow);
-        }
-        return minefield.ToArray();
-    }
+        return Enumerable.Range(0, input.Length)
+            .Select(x => string.Concat(Enumerable.Range(0, input[x].Length).Select(y => MineFinder(x, y))))
+            .ToArray();
 
-    private static char MineCount(int row, int col, ref string[] input)
-    {
-        var startRow = row == 0 ? 0 : row - 1;
-        var startCol = col == 0 ? 0 : col - 1;
-        var endRow = row + 1 < input.Length ? row + 1 : row;
-        var endCol = col + 1 < input[row].Length ? col + 1 : col;
-
-        var count = 0;
-        for(var r = startRow; r <= endRow; r++)
+        char MineFinder(int r, int c)
         {
-            for(var c = startCol; c <= endCol; c++)
-            {
-                if(input[r][c] == mine) count++;
-            }
+            if(input[r][c] == mine) return mine;
+
+            var rowStart = r > 0 ? r - 1 : r;
+            var rowEnd = r + 1 < input.Length ? r + 1 : r;
+            var colStart = c > 0 ? c - 1 : c;
+            var colEnd = c + 1 < input[r].Length ? c + 1 : c;
+
+            var count = Enumerable.Range(rowStart, rowEnd - rowStart + 1)
+                .Select(x => Enumerable.Range(colStart, colEnd - colStart + 1).Count(y => input[x][y] == mine))
+                .Sum();
+            
+            return count == 0 ? ' ' : (char)(count + '0');
         }
-        return count == 0 ? ' ' : char.Parse(count.ToString());
     }
 }
