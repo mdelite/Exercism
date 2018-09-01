@@ -1,55 +1,31 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 public static class Grep
 {
     public static string Match(string pattern, string flags, string[] files)
     {
-        var sb = new StringBuilder();
-        var caseInsensitive = flags.Contains("-i");
-        var fileMatch = flags.Contains("-l");
-        var lineMatch = flags.Contains("-x");
-        var tagNumber = flags.Contains("-n");
-        var inverted = flags.Contains("-v");
+        var regex = new Regex(flags.Contains("-x") ? $"^{pattern}$" : pattern, flags.Contains("-i") ? RegexOptions.IgnoreCase : RegexOptions.None);
 
-        var testPattern = caseInsensitive ? pattern.ToLowerInvariant() : pattern;
+        return string.Join("\n", files.Select(FindMatches).Where(x => !string.IsNullOrEmpty(x)));
 
-        foreach(var file in files)
+        string FindMatches(string file)
         {
-            var reader = new StreamReader(file);
-            string line;
-            var lineNumber = 0;
+            if(flags.Contains("-l")) return IsMatch(File.ReadAllText(file)) ? file : "";
 
-            while((line = reader.ReadLine()) != null)
-            {
-                lineNumber++;
-
-                var tag = tagNumber ? $"{lineNumber}:" : "";
-                if(LineMatch(line))
-                {
-                    if(fileMatch)
-                    {
-                        sb.Append($"{(sb.Length > 0 ? "\n" : "")}{file}");
-                        reader.ReadToEnd();
-                    }
-                    else
-                    {
-                        sb.Append($"{(sb.Length > 0 ? "\n" : "")}{(files.Length > 1 ? $"{file}:" : "")}{tag}{line}");
-                    }
-                }
-            }
-            reader.Close();
+            var fileTag = files.Length > 1 ? $"{file}:" : "";
+            return string.Join("\n", File.ReadAllLines(file)
+                .Select((text, i) => IsMatch(text) ? $"{fileTag}{(flags.Contains("-n") ? $"{i + 1}:" : "")}{text}" : "")
+                .Where(x => !string.IsNullOrEmpty(x)));
         }
 
-        return sb.ToString();
-
-        bool LineMatch(string text)
+        bool IsMatch(string text)
         {   
-            var testText = caseInsensitive ? text.ToLowerInvariant() : text;
-            var isMatch = lineMatch ? testText == testPattern : testText.Contains(testPattern);
-            return inverted ? !isMatch : isMatch;
+            var isMatch = regex.IsMatch(text);
+            return flags.Contains("-v") ? !isMatch : isMatch;
         }
     }
-
 }
