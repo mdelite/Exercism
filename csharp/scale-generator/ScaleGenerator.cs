@@ -17,7 +17,7 @@ public static class ScaleGenerator
         return pattern.Select(x =>
             {
                 var i = noteIndex;
-                noteIndex = (noteIndex + Step[x]) % scale.Length;
+                noteIndex = (noteIndex + step[x]) % scale.Length;
                 return i;
             })
             .Select(x => scale[x])
