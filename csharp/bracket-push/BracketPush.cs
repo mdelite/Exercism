@@ -1,6 +1,6 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+
 public static class BracketPush
 {
     public static bool IsPaired(string input)
