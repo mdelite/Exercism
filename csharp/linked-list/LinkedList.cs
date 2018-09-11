@@ -4,24 +4,38 @@ using System.Collections.Generic;
 
 public class Deque<T>
 {
-    private List<T> _collection;
-
-    public Deque() => _collection = new List<T>();
-    public void Push(T value) => _collection.Add(value);
-
-    public T Pop()
+    private class Node
     {
-        var p = _collection[_collection.Count - 1];
-        _collection.RemoveAt(_collection.Count - 1);
-        return p;
+        public T Value;
+        public Node Next;
+        public Node Previous;
+
+        public Node()
+        {
+            Next = this;
+            Previous = this;
+        }
+
+        internal void Append(T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal T Remove()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public void Unshift(T value) => _collection.Insert(0, value);
+    Node node = new Node();
 
-    public T Shift()
-    {
-        var p = _collection[0];
-        _collection.RemoveAt(0);
-        return p;
-    }
+    public Deque() => throw new NotImplementedException();
+
+    public void Push(T value) => node.Next.Append(value);
+
+    public T Pop() => node.Next.Remove();
+
+    public void Unshift(T value) => throw new NotImplementedException();
+
+    public T Shift() => throw new NotImplementedException();
 }
