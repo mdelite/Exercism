@@ -4,15 +4,10 @@ using System.Collections.Generic;
 
 public class Deque<T>
 {
-    public void Push(T value)
-    {
-        throw new NotImplementedException();
-    }
+    Node Head = new Node();
+    public void Push(T value) => Head.Insert(value);
 
-    public T Pop()
-    {
-        throw new NotImplementedException();
-    }
+    public T Pop() => Head.Prev.Remove();
 
     public void Unshift(T value)
     {
@@ -23,4 +18,30 @@ public class Deque<T>
     {
         throw new NotImplementedException();
     }
+
+    public class Node
+    {
+        public T Value;
+        public Node Next;
+        public Node Prev;
+
+        public Node()
+        {
+            Next = this;
+            Prev = this;
+        }
+
+        internal void Insert(T value)
+        {
+            Prev = Prev.Next = new Node{ Value = value, Next = this, Prev = this.Prev };
+        }
+
+        internal T Remove()
+        {
+            Next.Prev = Prev;
+            Prev.Next = Next;
+            return Value;
+        }
+    }
 }
+
