@@ -1,42 +1,28 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 public class Deque<T>
 {
-    Node Head = new Node();
-    public void Push(T value) => Head.Insert(value);
+    private Node _head = new Node();
+    
+    public void Push(T value) => _head.Insert(value);
 
-    public T Pop() => Head.Prev.Remove();
+    public T Pop() => _head.Prev.Remove();
 
-    public void Unshift(T value)
-    {
-        throw new NotImplementedException();
-    }
+    public void Unshift(T value) => _head.Next.Insert(value);
 
-    public T Shift()
-    {
-        throw new NotImplementedException();
-    }
+    public T Shift() => _head.Next.Remove();
 
-    public class Node
+    private class Node
     {
         public T Value;
         public Node Next;
         public Node Prev;
 
-        public Node()
-        {
-            Next = this;
-            Prev = this;
-        }
+        public Node() => Next = Prev = this;
 
-        internal void Insert(T value)
-        {
-            Prev = Prev.Next = new Node{ Value = value, Next = this, Prev = this.Prev };
-        }
+        public void Insert(T value) => Prev = Prev.Next = new Node { Value = value, Next = this, Prev = this.Prev };
 
-        internal T Remove()
+        public T Remove()
         {
             Next.Prev = Prev;
             Prev.Next = Next;
