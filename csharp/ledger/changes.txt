@@ -1,0 +1,1 @@
+- Ledger.PrintHead(), replaced the if-elses with a switch to clean up.
