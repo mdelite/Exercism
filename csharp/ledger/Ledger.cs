@@ -20,22 +20,17 @@ public class LedgerEntry
 
 public static class Ledger
 {
-    public static string Format(string currency, string locale, LedgerEntry[] entries)
-    {
-        return new LedgerBuilder(currency, locale, entries).Formatted;
-    }
+    public static string Format(string currency, string locale, LedgerEntry[] entries) =>
+        new LedgerBuilder(currency, locale, entries).Formatted;
 
-    public static LedgerEntry CreateEntry(string date, string desc, int chng)
-    {
-        return new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0f);
-    }
+    public static LedgerEntry CreateEntry(string date, string desc, int chng) =>
+        new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0f);
 }
 
 internal class LedgerBuilder
 {
     private CultureInfo _culture;
     private StringBuilder _formatted;
-    private LedgerEntry[] _entries;
 
     public string Formatted => _formatted.ToString();
 
@@ -43,71 +38,44 @@ internal class LedgerBuilder
     {
         _culture = CreateCulture(currency, locale);
         _formatted = new StringBuilder(PrintHead());
-        _entries = entries;
-
-        if (_entries.Length > 0)
-        {
-            var entriesForOutput = Sort();
-
-            for (var i = 0; i < entriesForOutput.Count(); i++)
-            {
-                _formatted.Append("\n" + PrintEntry( entriesForOutput.Skip(i).First()));
-            }
-        }
+        entries
+            .OrderBy(x => x.Date)
+            .ThenBy(x => x.Desc)
+            .ThenBy(x => x.Chg)
+            .ToList()
+            .ForEach(x => _formatted.Append("\n" + PrintEntry(x)));
     }
 
     private static CultureInfo CreateCulture(string cur, string loc)
     {
-        string curSymb = null;
-        int curNeg = 0;
-        string datPat = null;
-
-        if (cur != "USD" && cur != "EUR")
-        {
-            throw new ArgumentException("Invalid currency");
-        }
-        else
-        {
-            if (loc != "nl-NL" && loc != "en-US")
-            {
-                throw new ArgumentException("Invalid currency");
-            }
-
-            if (cur == "USD")
-            {
-                if (loc == "en-US")
-                {
-                    curSymb = "$";
-                    datPat = "MM/dd/yyyy";
-                }
-                else if (loc == "nl-NL")
-                {
-                    curSymb = "$";
-                    curNeg = 12;
-                    datPat = "dd/MM/yyyy";
-                }
-            }
-
-            if (cur == "EUR")
-            {
-                if (loc == "en-US")
-                {
-                    curSymb = "€";
-                    datPat = "MM/dd/yyyy";
-                }
-                else if (loc == "nl-NL")
-                {
-                    curSymb = "€";
-                    curNeg = 12;
-                    datPat = "dd/MM/yyyy";
-                }
-            }
-        }
-
         var culture = new CultureInfo(loc);
-        culture.NumberFormat.CurrencySymbol = curSymb;
-        culture.NumberFormat.CurrencyNegativePattern = curNeg;
-        culture.DateTimeFormat.ShortDatePattern = datPat;
+
+        switch (culture.Name)
+        {
+            case "en-US":
+                culture.NumberFormat.CurrencyNegativePattern = 0;
+                culture.DateTimeFormat.ShortDatePattern = "MM/dd/yyyy";
+                break;
+            case "nl-NL":
+                culture.NumberFormat.CurrencyNegativePattern = 12;
+                culture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+                break;
+            default:
+                throw new ArgumentException("Invalid currency");
+        }
+
+        switch (cur)
+        {
+            case "USD":
+                culture.NumberFormat.CurrencySymbol = "$";
+                break;
+            case "EUR":
+                culture.NumberFormat.CurrencySymbol = "€";
+                break;
+            default:
+                throw new ArgumentException("Invalid currency");
+        }
+
         return culture;
     }
 
@@ -124,50 +92,13 @@ internal class LedgerBuilder
         }
     }
 
-    private string Date( DateTime date) => date.ToString("d", _culture);
+    private string Date(DateTime date) => date.ToString("d", _culture);
 
-    private static string Description(string desc)
-    {
-        if (desc.Length > 25)
-        {
-            var trunc = desc.Substring(0, 22);
-            trunc += "...";
-            return trunc;
-        }
+    private static string Description(string desc) => desc.Length > 25 ? $"{desc.Substring(0, 22)}..." : desc;
 
-        return desc;
-    }
+    private string Change(float cgh) => cgh < 0.0 ? cgh.ToString("C", _culture) : cgh.ToString("C", _culture) + " ";
 
-    private string Change(float cgh)
-    {
-        return cgh < 0.0 ? cgh.ToString("C", _culture) : cgh.ToString("C", _culture) + " ";
-    }
-
-    private string PrintEntry(LedgerEntry entry)
-    {
-        var formatted = "";
-        var date = Date(entry.Date);
-        var description = Description(entry.Desc);
-        var change = Change(entry.Chg);
-
-        formatted += date;
-        formatted += " | ";
-        formatted += string.Format("{0,-25}", description);
-        formatted += " | ";
-        formatted += string.Format("{0,13}", change);
-
-        return formatted;
-    }
-
-    private IEnumerable<LedgerEntry> Sort()
-    {
-        var neg = _entries.Where(e => e.Chg < 0).OrderBy(x => x.Date + "@" + x.Desc + "@" + x.Chg);
-        var post = _entries.Where(e => e.Chg >= 0).OrderBy(x => x.Date + "@" + x.Desc + "@" + x.Chg);
-
-        var result = new List<LedgerEntry>();
-        result.AddRange(neg);
-        result.AddRange(post);
-
-        return result;
-    }
+    private string PrintEntry(LedgerEntry entry) =>
+        $"{Date(entry.Date)} | {Description(entry.Desc).PadRight(25)} | {Change(entry.Chg).PadLeft(13)}";
 }
+

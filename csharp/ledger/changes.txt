@@ -1,1 +1,3 @@
 - Ledger.PrintHead(), replaced the if-elses with a switch to clean up.
+- created a not-static class LedgerBuilder and moved all business logic there.
+- sorted the entries with LINQ in the constructor for the LedgerBuilder class and removed the Sort() method.
