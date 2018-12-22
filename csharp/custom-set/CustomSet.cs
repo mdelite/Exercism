@@ -5,24 +5,15 @@ using System.Linq;
 
 public class CustomSet : IEnumerable<int>
 {
-    private IEnumerable<int> _values;
+    private SortedSet<int> _values;
 
-    public CustomSet()
-    {
-        _values = Enumerable.Empty<int>();
-    }
-    
-    public CustomSet(params int[] values)
-    {
-        _values = values.Distinct().OrderBy(x => x);
-    }
+    public CustomSet() => _values = new SortedSet<int>();
+
+    public CustomSet(params int[] values) => _values = new SortedSet<int>(values);
 
     public CustomSet Add(int value)
     {
-        if (!_values.Contains(value))
-        {
-            _values = _values.Append(value).OrderBy(x => x);
-        }
+        _values.Add(value);
         return this;
     }
 
@@ -30,29 +21,9 @@ public class CustomSet : IEnumerable<int>
 
     public bool Contains(int value) => _values.Contains(value);
 
-    public bool Subset(CustomSet right)
-    {
-        foreach(var val in _values)
-        {
-            if(!right.Contains(val))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    public bool Subset(CustomSet right) => _values.IsSubsetOf(right);
 
-    public bool Disjoint(CustomSet right)
-    {
-        foreach(var val in _values)
-        {
-            if(right.Contains(val))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    public bool Disjoint(CustomSet right) => !_values.Any(x => right.Contains(x));
 
     public CustomSet Intersection(CustomSet right) => new CustomSet(_values.Intersect(right).ToArray());
 
@@ -60,7 +31,7 @@ public class CustomSet : IEnumerable<int>
 
     public CustomSet Union(CustomSet right)
     {
-        right.ToList().ForEach(x => this.Add(x));
+        _values.UnionWith(right);
         return this;
     }
 
@@ -68,7 +39,7 @@ public class CustomSet : IEnumerable<int>
 
     public override bool Equals(object obj)
     {
-        if(obj == null || !this.GetType().Equals(obj.GetType()))
+        if(obj == null || this.GetType() != obj.GetType())
         {
             return false;
         }
@@ -80,24 +51,12 @@ public class CustomSet : IEnumerable<int>
             return false;
         }
 
-        foreach(var d in this)
-        {
-            if(!right.Contains(d))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return _values.All(x => right.Contains(x));
     }
 
-    public IEnumerator<int> GetEnumerator()
-    {
-        return _values.GetEnumerator();
-    }
+    public override int GetHashCode() => _values.GetHashCode();
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return _values.GetEnumerator();
-    }
+    public IEnumerator<int> GetEnumerator() => _values.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => _values.GetEnumerator();
 }
