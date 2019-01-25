@@ -87,6 +87,31 @@ public class DotDslTest
         Assert.Equal(new[] { new Attr("bar", "true"), new Attr("foo", "1"), new Attr("title", "Testing Attrs") }, g.Attrs, EnumerableEqualityComparer<Attr>.Instance);
     }
 
+        [Fact(Skip = "Remove to run test")]
+    public void Graph_with_attributes2()
+    {
+        var g = new Graph
+        {
+            { "foo", "1" },
+            { "title", "Testing Attrs" },
+            new Node("a") { { "color", "green" } },
+            new Node("c"),
+            new Node("b") { {  "label", "Beta!" } },
+            new Edge("b", "c"),
+            new Edge("a", "b") { { "color", "blue" } },
+            { "bar", "true" }
+        };
+
+        var p1 = new Node("a") { { "color", "green" } };
+        var p2 = new Node("b") { { "label", "Beta!" } };
+        var p3 = new Node("c");
+        var ary = new[] { p1 , p1 , p3 };
+
+        Assert.Equal(ary , g.Nodes, EnumerableEqualityComparer<Node>.Instance);
+        Assert.Equal(new[] { new Edge("a", "b") { { "color", "blue" } }, new Edge("b", "c") }, g.Edges, EnumerableEqualityComparer<Edge>.Instance);
+        Assert.Equal(new[] { new Attr("bar", "true"), new Attr("foo", "1"), new Attr("title", "Testing Attrs") }, g.Attrs, EnumerableEqualityComparer<Attr>.Instance);
+    }
+
     private class EnumerableEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
     {
         public static readonly EnumerableEqualityComparer<T> Instance = new EnumerableEqualityComparer<T>();
