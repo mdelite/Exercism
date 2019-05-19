@@ -1,30 +1,48 @@
 ﻿using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Node : IEnumerable, IEquatable<Node>
 {
-    private string v;
+    public string Name;
+    public string Type;
+    public string Value;
 
-    public Node(string v)
+    public Node(string name)
     {
-        this.v = v;
+        this.Name = name;
     }
 
     public void Add(string type, string val)
     {
-        throw new NotImplementedException();
+        this.Type = type;
+        this.Value = val;
     }
 
     public bool Equals(Node other)
     {
-        throw new NotImplementedException();
+        return other != null &&
+            other.Name == this.Name &&
+            other.Type == this.Type &&
+            other.Value == this.Value;
     }
 
     public IEnumerator GetEnumerator()
     {
-        throw new NotImplementedException();
+        yield return this.Name;
+        yield return this.Type;
+        yield return this.Value;
     }
+
+    // public override int GetHashCode()
+    // {
+    //     var hash = 13;
+    //     hash = hash * 7 + Name.GetHashCode();
+    //     hash = hash * 7 + Type.GetHashCode();
+    //     hash = hash * 7 + Value.GetHashCode();
+    //     return hash;
+    // }
 }
 
 public class Edge : IEnumerable, IEquatable<Edge>
@@ -40,7 +58,8 @@ public class Edge : IEnumerable, IEquatable<Edge>
 
     public void Add(string v1, string v2)
     {
-        throw new NotImplementedException();
+        this.v1 = v1;
+        this.v2 = v2;
     }
 
     public bool Equals(Edge other)
@@ -50,19 +69,20 @@ public class Edge : IEnumerable, IEquatable<Edge>
 
     public IEnumerator GetEnumerator()
     {
-        throw new NotImplementedException();
+        yield return v1;
+        yield return v2;
     }
 }
 
 public class Attr : IEnumerable, IEquatable<Attr>
 {
-    private string v1;
-    private string v2;
+    private string name;
+    private string value;
 
-    public Attr(string v1, string v2)
+    public Attr(string name, string val)
     {
-        this.v1 = v1;
-        this.v2 = v2;
+        this.name = name;
+        this.value = val;
     }
 
     public bool Equals(Attr other)
@@ -72,29 +92,35 @@ public class Attr : IEnumerable, IEquatable<Attr>
 
     public IEnumerator GetEnumerator()
     {
-        throw new NotImplementedException();
+        yield return name;
+        yield return value;
     }
 }
 
 public class Graph : IEnumerable
 {
-    public IEnumerable<Node> Nodes { get; internal set; }
-    public IEnumerable<Edge> Edges { get; internal set; }
-    public IEnumerable<Attr> Attrs { get; internal set; }
-
-    public void Add(Node Nodes)
+    List<Node> _nodes = new List<Node>();
+    public Graph()
     {
-        throw new NotImplementedException();
+
+    }
+    public List<Node> Nodes { set; get; } = new List<Node>();
+    public List<Edge> Edges { get;  set; } = new List<Edge>();
+    public List<Attr> Attrs { get;  set; } = new List<Attr>();
+
+    public void Add(Node node)
+    {
+        _nodes.Add(node);
     }
 
-    public void Add(Edge edges)
+    public void Add(Edge edge)
     {
-        throw new NotImplementedException();
+        Edges.Add(edge);
     }
 
     public void Add(string type, string value)
     {
-        throw new NotImplementedException();
+        Attrs.Add(new Attr(type, value));
     }
 
     public IEnumerator GetEnumerator()
