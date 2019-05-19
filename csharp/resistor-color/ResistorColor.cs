@@ -17,13 +17,7 @@ public static class ResistorColor
         { "grey", 8 },
         { "white", 9 }
     };
-    public static int ColorCode(string color)
-    {
-        return colorTable[color];
-    }
+    public static int ColorCode(string color) => colorTable[color];
 
-    public static string[] Colors()
-    {
-        return colorTable.ToList().Select(x => x.Key).ToArray();
-    }
+    public static string[] Colors() => colorTable.Keys.ToArray();
 }
