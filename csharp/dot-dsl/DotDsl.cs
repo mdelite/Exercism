@@ -34,14 +34,15 @@ public class Attr : IEnumerable<string>
         Value = val;
     }
 
-    IEnumerator<string> IEnumerable<string>.GetEnumerator()
+    public IEnumerator<string> GetEnumerator()
     {
-        throw new NotImplementedException();
+        yield return Key;
+        yield return Value;
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        throw new NotImplementedException();
+        return GetEnumerator();
     }
 }
 
