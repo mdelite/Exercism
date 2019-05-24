@@ -2,54 +2,70 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Node : HasAttrs
+public class Node : Element
 {
-    public string Name { set; get; }
+    public string Name { get; }
     public Node(string v)
     {
         this.Name = v;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || obj.GetType() != this.GetType()) return false;
+
+        return ((Node)obj).Name == this.Name;
+    }
+
+    public override int GetHashCode() => Name.GetHashCode();
 }
 
-public class Edge : HasAttrs
+public class Edge : Element
 {
-    public Node Start { get; protected set; }
-    public Node End { get; protected set; }
+    public string Start { get; }
+    public string End { get; }
 
     public Edge(string start, string end)
     {
-        this.Start = new Node(start);
-        this.End = new Node(end);
+        this.Start = start;
+        this.End = end;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || obj.GetType() != this.GetType()) return false;
+
+        return ((Edge)obj).Start == this.Start && ((Edge)obj).End == this.End;
+    }
+
+    public override int GetHashCode() => Start.GetHashCode() ^ End.GetHashCode();
 }
 
-public class Attr : IEnumerable<string>
+public class Attr
 {
-    public readonly string Key;
-    public readonly string Value;
+    public string Key { get; }
+    public string Value { get; }
 
     public Attr(string key, string val)
     {
-        Key = key;
-        Value = val;
+        this.Key = key;
+        this.Value = val;
     }
 
-    public IEnumerator<string> GetEnumerator()
+    public override bool Equals(object obj)
     {
-        yield return Key;
-        yield return Value;
+        if (obj == null || obj.GetType() != this.GetType()) return false;
+        return ((Attr)obj).Key == this.Key && ((Attr)obj).Value == this.Value;
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    public override int GetHashCode() => Key.GetHashCode() ^ Value.GetHashCode();
+
 }
 
-public class Graph : HasAttrs
+public class Graph : Element
 {
-    public HashSet<Node> Nodes { set; get; }
-    public HashSet<Edge> Edges { set; get; }
+    public HashSet<Node> Nodes { get; }
+    public HashSet<Edge> Edges { get; }
 
     public Graph()
     {
@@ -58,13 +74,12 @@ public class Graph : HasAttrs
     }
     public void Add(Node node) => this.Nodes.Add(node);
     public void Add(Edge edge) => this.Edges.Add(edge);
-
 }
 
-public abstract class HasAttrs : IEnumerable<Attr>
+public abstract class Element : IEnumerable<Attr>
 {
     public HashSet<Attr> Attrs { get; protected set; }
-    public HasAttrs() => Attrs = new HashSet<Attr>();
+    public Element() => Attrs = new HashSet<Attr>();
 
     public IEnumerator<Attr> GetEnumerator() => Attrs.GetEnumerator();
 
