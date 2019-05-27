@@ -6,10 +6,13 @@ public class SpiralMatrix
 {
     public static int[,] GetMatrix(int size)
     {
+        var matrix = new int[size, size];
+
         var rows = new List<List<int>>();
 
         int[,] middleMatrix = new int[,] { };
         if (size >= 3) middleMatrix = GetMatrix(size - 2);
+
         var offset = (size - 1) * 4; //Offset to apply to middle matrix
 
         for (int r = 0; r < size; r++)
@@ -22,15 +25,15 @@ public class SpiralMatrix
             {
                 rows.Add(Enumerable.Range(size * 2 - 1, size).Reverse().ToList());
             }
-            else
+            else  //middle rows
             {
                 var row = new List<int>();
                 row.Add(offset + 1 - r); //first column
-                
-                for( var i = 0; i < middleMatrix.GetLength(1); i++ )
-                {
-                    row.Add(middleMatrix[r-1,i] + offset);
-                }
+
+                row.AddRange(
+                    Enumerable.Range(0,middleMatrix.GetLength(1))
+                    .Select(x => middleMatrix[r - 1, x] + offset)
+                );
 
                 row.Add(size + r); //last column
 
@@ -39,7 +42,7 @@ public class SpiralMatrix
         }
 
         //fill the matrix
-        var matrix = new int[size, size];
+        
 
         for (var r = 0; r < size; r++)
         {
