@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public static class VariableLengthQuantity
 {
@@ -27,6 +26,23 @@ public static class VariableLengthQuantity
 
     public static uint[] Decode(uint[] bytes)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var numbers = new List<uint>();
+        var number = 0x00u;
+        var n = 0;
+        var more = 0x00u;
+        while(n < bytes.Length)
+        {
+            var b = bytes[n++];
+            more = b & 0x80u;
+            number = (number << 7) | (b & 0x7fu);
+            if(more != 0x80u)
+            {
+                numbers.Add(number);
+                number = 0x00u;
+            }
+        }
+        if(more != 0x00u) throw new InvalidOperationException();
+        
+        return numbers.ToArray();
     }
 }

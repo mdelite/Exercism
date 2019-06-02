@@ -149,7 +149,7 @@ public class VariableLengthQuantityTest
         Assert.Equal(expected, VariableLengthQuantity.Encode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void One_byte()
     {
         var integers = new[] { 0x7Fu };
@@ -157,7 +157,7 @@ public class VariableLengthQuantityTest
         Assert.Equal(expected, VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Two_bytes()
     {
         var integers = new[] { 0xC0u, 0x0u };
@@ -165,7 +165,7 @@ public class VariableLengthQuantityTest
         Assert.Equal(expected, VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Three_bytes()
     {
         var integers = new[] { 0xFFu, 0xFFu, 0x7Fu };
@@ -173,7 +173,7 @@ public class VariableLengthQuantityTest
         Assert.Equal(expected, VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Four_bytes()
     {
         var integers = new[] { 0x81u, 0x80u, 0x80u, 0x0u };
@@ -181,7 +181,7 @@ public class VariableLengthQuantityTest
         Assert.Equal(expected, VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Maximum_32_bit_integer()
     {
         var integers = new[] { 0x8Fu, 0xFFu, 0xFFu, 0xFFu, 0x7Fu };
@@ -189,21 +189,21 @@ public class VariableLengthQuantityTest
         Assert.Equal(expected, VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Incomplete_sequence_causes_error()
     {
         var integers = new[] { 0xFFu };
         Assert.Throws<InvalidOperationException>(() => VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Incomplete_sequence_causes_error_even_if_value_is_zero()
     {
         var integers = new[] { 0x80u };
         Assert.Throws<InvalidOperationException>(() => VariableLengthQuantity.Decode(integers));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Multiple_values()
     {
         var integers = new[] { 0xC0u, 0x0u, 0xC8u, 0xE8u, 0x56u, 0xFFu, 0xFFu, 0xFFu, 0x7Fu, 0x0u, 0xFFu, 0x7Fu, 0x81u, 0x80u, 0x0u };
