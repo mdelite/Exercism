@@ -1,48 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class VariableLengthQuantity
 {
-    public static uint[] Encode(uint[] numbers)
-    {
-        var chunks = new List<uint>();
-        foreach (var n in numbers)
-        {
-            var stack = new Stack<uint>();
-            var more = 0x00u;
-            var number = n;
-            do
-            {
-                var v = (number & 0x7fu) | more;
-                stack.Push(v);
-                number = number >> 7;
-                more = 0x80u;
-            } while (number > 0);
-            chunks.AddRange(stack);
-        }
+    public static uint[] Encode(uint[] numbers) => numbers.SelectMany(x => Bytes(x).Reverse()).ToArray();
+    public static uint[] Decode(uint[] bytes) => Combine(bytes).ToArray();
 
-        return chunks.ToArray();
-    }
-
-    public static uint[] Decode(uint[] bytes)
+    private static IEnumerable<uint> Combine(uint[] bytes)
     {
-        var numbers = new List<uint>();
+        if ((bytes.Last() & 0x80u) > 0) throw new InvalidOperationException();
         var number = 0x00u;
-        var n = 0;
-        var more = 0x00u;
-        while(n < bytes.Length)
+        foreach (var b in bytes)
         {
-            var b = bytes[n++];
-            more = b & 0x80u;
             number = (number << 7) | (b & 0x7fu);
-            if(more != 0x80u)
+            if ((b & 0x80u) == 0)
             {
-                numbers.Add(number);
+                yield return number;
                 number = 0x00u;
             }
         }
-        if(more != 0x00u) throw new InvalidOperationException();
-        
-        return numbers.ToArray();
+    }
+
+    public static IEnumerable<uint> Bytes(uint number)
+    {
+        var more = 0x00u;
+        do
+        {
+            yield return (number & 0x7fu) | more;
+            number >>= 7;
+            more = 0x80u;
+        } while (number > 0);
     }
 }
