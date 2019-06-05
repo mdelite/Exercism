@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -12,9 +11,9 @@ public static class Luhn
 
         return number.Select(x => (int)char.GetNumericValue(x))
             .Reverse()
-            .Select((x, i) => (i + 1) % 2 == 0 ? Double(x) : x)
+            .Select((x, i) => (i + 1) % 2 == 0 ? CheckDigit(x) : x)
             .Sum() % 10 == 0;
     }
 
-    private static int Double(int n) => n * 2 > 9 ? n * 2 - 9 : n * 2;
+    private static int CheckDigit(int n) => n * 2 > 9 ? n * 2 - 9 : n * 2;
 }
