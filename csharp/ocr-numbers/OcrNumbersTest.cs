@@ -17,7 +17,7 @@ public class OcrNumbersTest
         Assert.Equal("0", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_1()
     {
         var rows = 
@@ -29,7 +29,7 @@ public class OcrNumbersTest
         Assert.Equal("1", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Unreadable_but_correctly_sized_inputs_return_()
     {
         var rows = 
@@ -41,7 +41,7 @@ public class OcrNumbersTest
         Assert.Equal("?", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Input_with_a_number_of_lines_that_is_not_a_multiple_of_four_raises_an_error()
     {
         var rows = 
@@ -51,7 +51,7 @@ public class OcrNumbersTest
         Assert.Throws<ArgumentException>(() => OcrNumbers.Convert(rows));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Input_with_a_number_of_columns_that_is_not_a_multiple_of_three_raises_an_error()
     {
         var rows = 
@@ -62,7 +62,7 @@ public class OcrNumbersTest
         Assert.Throws<ArgumentException>(() => OcrNumbers.Convert(rows));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_110101100()
     {
         var rows = 
@@ -74,7 +74,7 @@ public class OcrNumbersTest
         Assert.Equal("110101100", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Garbled_numbers_in_a_string_are_replaced_with_()
     {
         var rows = 
