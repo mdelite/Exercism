@@ -6,45 +6,20 @@ public static class OcrNumbers
 {
     public static string Convert(string input)
     {
-        var lines = input.Split("\n");
+        var row = input.Split("\n");
+        return ConvertRow(row);
+    }
+
+    private static string ConvertRow(string[] lines)
+    {
         if (lines.Count() < 4 || lines[0].Length % 3 != 0) throw new ArgumentException();
 
         var digits = Enumerable.Range(0, lines[0].Length / 3)
             .Select(y => Enumerable.Range(0, 4)
                 .Select(x => lines[x].Substring(y * 3, 3)))
-            .Select(x => GetChar(x));
+            .Select(x => Digits.GetChar(x));
 
         return string.Join("", digits);
-    }
-
-    private static char GetChar(IEnumerable<string> text)
-    {
-        var s = string.Join("\n", text);
-        switch (s)
-        {
-            case Digits.Zero:
-                return '0';
-            case Digits.One:
-                return '1';
-            case Digits.Two:
-                return '2';
-            case Digits.Three:
-                return '3';
-            case Digits.Four:
-                return '4';
-            case Digits.Five:
-                return '5';
-            case Digits.Six:
-                return '6';
-            case Digits.Seven:
-                return '7';
-            case Digits.Eight:
-                return '8';
-            case Digits.Nine:
-                return '9';
-            default:
-                return '?';
-        }
     }
 
     private static class Digits
@@ -99,5 +74,35 @@ public static class OcrNumbers
             "|_|\n" +
             " _|\n" +
             "   ";
+        public static char GetChar(IEnumerable<string> text)
+        {
+            var s = string.Join("\n", text);
+            switch (s)
+            {
+                case Digits.Zero:
+                    return '0';
+                case Digits.One:
+                    return '1';
+                case Digits.Two:
+                    return '2';
+                case Digits.Three:
+                    return '3';
+                case Digits.Four:
+                    return '4';
+                case Digits.Five:
+                    return '5';
+                case Digits.Six:
+                    return '6';
+                case Digits.Seven:
+                    return '7';
+                case Digits.Eight:
+                    return '8';
+                case Digits.Nine:
+                    return '9';
+                default:
+                    return '?';
+            }
+        }
+
     }
 }

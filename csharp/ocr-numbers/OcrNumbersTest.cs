@@ -182,7 +182,7 @@ public class OcrNumbersTest
         Assert.Equal("9", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_string_of_decimal_numbers()
     {
         var rows = 
