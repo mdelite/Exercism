@@ -86,7 +86,7 @@ public class OcrNumbersTest
         Assert.Equal("11?10?1?0", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_2()
     {
         var rows = 
@@ -98,7 +98,7 @@ public class OcrNumbersTest
         Assert.Equal("2", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_3()
     {
         var rows = 
@@ -110,7 +110,7 @@ public class OcrNumbersTest
         Assert.Equal("3", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_4()
     {
         var rows = 
@@ -122,7 +122,7 @@ public class OcrNumbersTest
         Assert.Equal("4", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_5()
     {
         var rows = 
@@ -134,7 +134,7 @@ public class OcrNumbersTest
         Assert.Equal("5", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_6()
     {
         var rows = 
@@ -146,7 +146,7 @@ public class OcrNumbersTest
         Assert.Equal("6", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_7()
     {
         var rows = 
@@ -158,7 +158,7 @@ public class OcrNumbersTest
         Assert.Equal("7", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_8()
     {
         var rows = 
@@ -170,7 +170,7 @@ public class OcrNumbersTest
         Assert.Equal("8", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Recognizes_9()
     {
         var rows = 
