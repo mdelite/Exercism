@@ -194,7 +194,7 @@ public class OcrNumbersTest
         Assert.Equal("1234567890", actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Numbers_separated_by_empty_lines_are_recognized_lines_are_joined_by_commas_()
     {
         var rows = 
