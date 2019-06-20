@@ -4,23 +4,25 @@ using System.Linq;
 
 public static class NthPrime
 {
-    public static int Prime(int nth)
+    public static int Prime(int nth) => Primes().ElementAt(nth - 1);
+
+    private static IEnumerable<int> Primes()
     {
-        var primes = new List<int>() { 2 };
+        yield return 2;
+        yield return 3;
 
-        while (primes.Count < nth)
+        var i = 6;
+        while (true)
         {
-            var c = 1;
-            primes.AddRange(Enumerable.Range(primes.Last() + 1, nth));
-
-            var sqrt = Math.Sqrt( primes.Last());
-            while (c <= sqrt)
-            {
-                c = primes.First(x => x > c);
-                primes.RemoveAll(x => x != c && x % c == 0);
-            }
+            if (IsPrime(i - 1)) yield return i - 1;
+            if (IsPrime(i + 1)) yield return i + 1;
+            i += 6;
         }
+    }
 
-        return primes[nth - 1];
+    private static bool IsPrime(int n)
+    {
+        var r = (int)Math.Floor(Math.Sqrt(n));
+        return r < 5 || Enumerable.Range(5, r - 4).All(x => n % x != 0);
     }
 }
