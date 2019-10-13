@@ -8,6 +8,7 @@ public static class RunLengthEncoding
         var pattern = @"(.)\1{0,}";
         var regex = new Regex(pattern);
         var output = "";
+
         foreach (Match match in regex.Matches(input))
         {
             var len = match.Value.Length;
@@ -18,11 +19,25 @@ public static class RunLengthEncoding
 
             output += match.Value.Substring(0,1);
         }
+        
         return output;
     }
 
     public static string Decode(string input)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var pattern = @"(\d*)(.)";
+        var regex = new Regex(pattern);
+        var output = "";
+
+        foreach (Match match in regex.Matches(input))
+        {
+            var c = 0;
+            if ( !int.TryParse(match.Groups[1].Value, out c)) c = 1;
+
+            var character = Char.Parse( match.Groups[2].Value);
+            output += new string(character,c);
+        }
+
+        return output;
     }
 }
