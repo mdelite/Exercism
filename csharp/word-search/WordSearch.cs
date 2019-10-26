@@ -4,26 +4,20 @@ using System.Linq;
 
 public class WordSearch
 {
-    private string[] _rows;
+    private string[] rows;
+    private int width;
+    private int heigth;
+
     public WordSearch(string grid)
     {
-        _rows = grid.Split("\n");
+        rows = grid.Split("\n");
+        width = rows[0].Length;
+        heigth = rows.Length;
     }
 
     public Dictionary<string, ((int, int), (int, int))?> Search(string[] wordsToSearchFor)
     {
-        return  wordsToSearchFor.ToDictionary( x => x, y => GetCoords(y));
+        throw new NotImplementedException();
     }
-    private ((int, int), (int, int))? GetCoords( string word)
-    {
-        for(var r = 0; r < _rows.Length; r++)
-        {
-            var found = _rows[r].IndexOf(word);
-            if(found >= 0)
-            {
-                return ((found + 1, r+ 1), (found + word.Length, r+1));
-            }
-        }
-        return null;
-    }
+
 }

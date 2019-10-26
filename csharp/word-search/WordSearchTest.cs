@@ -20,7 +20,7 @@ public class WordSearchTest
         Assert.Null(expected["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_one_word_written_left_to_right()
     {
         var wordsToSearchFor = new[] { "clojure" };
@@ -34,7 +34,7 @@ public class WordSearchTest
         Assert.Equal(expected["clojure"], actual["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_the_same_word_written_left_to_right_in_a_different_position()
     {
         var wordsToSearchFor = new[] { "clojure" };
@@ -48,7 +48,7 @@ public class WordSearchTest
         Assert.Equal(expected["clojure"], actual["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_a_different_left_to_right_word()
     {
         var wordsToSearchFor = new[] { "coffee" };
@@ -62,7 +62,7 @@ public class WordSearchTest
         Assert.Equal(expected["coffee"], actual["coffee"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_that_different_left_to_right_word_in_a_different_position()
     {
         var wordsToSearchFor = new[] { "coffee" };
@@ -76,7 +76,7 @@ public class WordSearchTest
         Assert.Equal(expected["coffee"], actual["coffee"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_a_left_to_right_word_in_two_line_grid()
     {
         var wordsToSearchFor = new[] { "clojure" };
@@ -92,7 +92,7 @@ public class WordSearchTest
         Assert.Equal(expected["clojure"], actual["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_a_left_to_right_word_in_three_line_grid()
     {
         var wordsToSearchFor = new[] { "clojure" };
@@ -109,7 +109,7 @@ public class WordSearchTest
         Assert.Equal(expected["clojure"], actual["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_a_left_to_right_word_in_ten_line_grid()
     {
         var wordsToSearchFor = new[] { "clojure" };
@@ -133,7 +133,7 @@ public class WordSearchTest
         Assert.Equal(expected["clojure"], actual["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_that_left_to_right_word_in_a_different_position_in_a_ten_line_grid()
     {
         var wordsToSearchFor = new[] { "clojure" };
@@ -157,7 +157,7 @@ public class WordSearchTest
         Assert.Equal(expected["clojure"], actual["clojure"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_a_different_left_to_right_word_in_a_ten_line_grid()
     {
         var wordsToSearchFor = new[] { "fortran" };
@@ -181,7 +181,7 @@ public class WordSearchTest
         Assert.Equal(expected["fortran"], actual["fortran"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_multiple_words()
     {
         var wordsToSearchFor = new[] { "fortran", "clojure" };
@@ -207,7 +207,7 @@ public class WordSearchTest
         Assert.Equal(expected["fortran"], actual["fortran"]);
     }
 
-    [Fact]
+    [Fact(Skip = "Remove to run test")]
     public void Should_locate_a_single_word_written_right_to_left()
     {
         var wordsToSearchFor = new[] { "elixir" };
