@@ -2,13 +2,19 @@
 
 public class BowlingGame
 {
+    int _score;
+
+    public BowlingGame()
+    {
+        _score = 0;
+    }
     public void Roll(int pins) 
     {
-        throw new NotImplementedException("You need to implement this function.");
+        _score += pins;
     }
 
     public int? Score()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return _score;
     }
 }
