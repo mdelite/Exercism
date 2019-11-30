@@ -16,7 +16,7 @@ public class BowlingTest
         Assert.Equal(0, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Should_be_able_to_score_a_game_with_no_strikes_or_spares()
     {
         var sut = new BowlingGame();
@@ -26,7 +26,7 @@ public class BowlingTest
         Assert.Equal(90, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_spare_followed_by_zeros_is_worth_ten_points()
     {
         var sut = new BowlingGame();
@@ -36,7 +36,7 @@ public class BowlingTest
         Assert.Equal(10, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Points_scored_in_the_roll_after_a_spare_are_counted_twice()
     {
         var sut = new BowlingGame();
