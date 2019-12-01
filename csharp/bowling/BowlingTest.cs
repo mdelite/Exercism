@@ -46,7 +46,7 @@ public class BowlingTest
         Assert.Equal(16, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Consecutive_spares_each_get_a_one_roll_bonus()
     {
         var sut = new BowlingGame();
@@ -56,7 +56,7 @@ public class BowlingTest
         Assert.Equal(31, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_spare_in_the_last_frame_gets_a_one_roll_bonus_that_is_counted_once()
     {
         var sut = new BowlingGame();
