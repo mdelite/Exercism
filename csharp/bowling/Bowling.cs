@@ -30,23 +30,33 @@ public class BowlingGame
             return _rolls[rollNumber + 1];
         }
 
+        if (IsStrike(rollNumber))
+        {
+            return _rolls[rollNumber + 1] + _rolls[rollNumber + 2];
+        }
+
         return 0;
     }
 
-    private bool IsSpare(int rollNumber)
+    private bool IsSpare(int r)
     {
-        return GetFrame(rollNumber) > 0 && _rolls[rollNumber] + _rolls[rollNumber - 1] == 10;
+        return GetFrame(r) > 0 && _rolls[r] + _rolls[r - 1] == 10;
     }
 
-    private int GetFrame(int rollNumber)
+    private bool IsStrike(int r)
+    {
+        return GetFrame(r) < 0 && _rolls[r] == 10;
+    }
+
+    private int GetFrame(int r)
     {
         var frame = -1;
 
-        for (int i = 0; i < rollNumber; i++)
+        for (int i = 1; i <= r; i++)
         {
             if (frame < 0)
             {
-                if (_rolls[rollNumber] == 10)
+                if (_rolls[r - 1] == 10)
                 {
                     frame--;
                 }

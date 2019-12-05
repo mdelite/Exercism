@@ -76,7 +76,7 @@ public class BowlingTest
         Assert.Equal(10, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Points_scored_in_the_two_rolls_after_a_strike_are_counted_twice_as_a_bonus()
     {
         var sut = new BowlingGame();
@@ -86,7 +86,7 @@ public class BowlingTest
         Assert.Equal(26, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Consecutive_strikes_each_get_the_two_roll_bonus()
     {
         var sut = new BowlingGame();
@@ -96,7 +96,7 @@ public class BowlingTest
         Assert.Equal(81, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_strike_in_the_last_frame_gets_a_two_roll_bonus_that_is_counted_once()
     {
         var sut = new BowlingGame();
@@ -106,7 +106,7 @@ public class BowlingTest
         Assert.Equal(18, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Rolling_a_spare_with_the_two_roll_bonus_does_not_get_a_bonus_roll()
     {
         var sut = new BowlingGame();
@@ -116,7 +116,7 @@ public class BowlingTest
         Assert.Equal(20, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Strikes_with_the_two_roll_bonus_do_not_get_bonus_rolls()
     {
         var sut = new BowlingGame();
@@ -126,7 +126,7 @@ public class BowlingTest
         Assert.Equal(30, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_strike_with_the_one_roll_bonus_after_a_spare_in_the_last_frame_does_not_get_a_bonus()
     {
         var sut = new BowlingGame();
@@ -136,7 +136,7 @@ public class BowlingTest
         Assert.Equal(20, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void All_strikes_is_a_perfect_game()
     {
         var sut = new BowlingGame();
