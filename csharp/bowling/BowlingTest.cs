@@ -16,7 +16,7 @@ public class BowlingTest
         Assert.Equal(0, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Should_be_able_to_score_a_game_with_no_strikes_or_spares()
     {
         var sut = new BowlingGame();
@@ -26,7 +26,7 @@ public class BowlingTest
         Assert.Equal(90, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_spare_followed_by_zeros_is_worth_ten_points()
     {
         var sut = new BowlingGame();
@@ -36,7 +36,7 @@ public class BowlingTest
         Assert.Equal(10, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Points_scored_in_the_roll_after_a_spare_are_counted_twice()
     {
         var sut = new BowlingGame();
@@ -46,7 +46,7 @@ public class BowlingTest
         Assert.Equal(16, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Consecutive_spares_each_get_a_one_roll_bonus()
     {
         var sut = new BowlingGame();
@@ -56,7 +56,7 @@ public class BowlingTest
         Assert.Equal(31, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_spare_in_the_last_frame_gets_a_one_roll_bonus_that_is_counted_once()
     {
         var sut = new BowlingGame();
@@ -66,7 +66,7 @@ public class BowlingTest
         Assert.Equal(17, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_strike_earns_ten_points_in_a_frame_with_a_single_roll()
     {
         var sut = new BowlingGame();
