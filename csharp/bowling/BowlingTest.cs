@@ -146,7 +146,7 @@ public class BowlingTest
         Assert.Equal(300, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Rolls_cannot_score_negative_points()
     {
         var sut = new BowlingGame();
@@ -155,7 +155,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(-1));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void A_roll_cannot_score_more_than_10_points()
     {
         var sut = new BowlingGame();
@@ -164,7 +164,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(11));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Two_rolls_in_a_frame_cannot_score_more_than_10_points()
     {
         var sut = new BowlingGame();
@@ -173,7 +173,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(6));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Bonus_roll_after_a_strike_in_the_last_frame_cannot_score_more_than_10_points()
     {
         var sut = new BowlingGame();
@@ -182,7 +182,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(11));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Two_bonus_rolls_after_a_strike_in_the_last_frame_cannot_score_more_than_10_points()
     {
         var sut = new BowlingGame();
@@ -191,7 +191,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(6));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Two_bonus_rolls_after_a_strike_in_the_last_frame_can_score_more_than_10_points_if_one_is_a_strike()
     {
         var sut = new BowlingGame();
@@ -201,7 +201,7 @@ public class BowlingTest
         Assert.Equal(26, actual);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void The_second_bonus_rolls_after_a_strike_in_the_last_frame_cannot_be_a_strike_if_the_first_one_is_not_a_strike()
     {
         var sut = new BowlingGame();
@@ -210,7 +210,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(10));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Second_bonus_roll_after_a_strike_in_the_last_frame_cannot_score_more_than_10_points()
     {
         var sut = new BowlingGame();
@@ -219,7 +219,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(11));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void An_unstarted_game_cannot_be_scored()
     {
         var sut = new BowlingGame();
@@ -228,7 +228,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Score());
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void An_incomplete_game_cannot_be_scored()
     {
         var sut = new BowlingGame();
@@ -237,7 +237,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Score());
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Cannot_roll_if_game_already_has_ten_frames()
     {
         var sut = new BowlingGame();
@@ -246,7 +246,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(0));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Bonus_rolls_for_a_strike_in_the_last_frame_must_be_rolled_before_score_can_be_calculated()
     {
         var sut = new BowlingGame();
@@ -255,7 +255,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Score());
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Both_bonus_rolls_for_a_strike_in_the_last_frame_must_be_rolled_before_score_can_be_calculated()
     {
         var sut = new BowlingGame();
@@ -264,7 +264,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Score());
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Bonus_roll_for_a_spare_in_the_last_frame_must_be_rolled_before_score_can_be_calculated()
     {
         var sut = new BowlingGame();
@@ -273,7 +273,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Score());
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Cannot_roll_after_bonus_roll_for_spare()
     {
         var sut = new BowlingGame();
@@ -282,7 +282,7 @@ public class BowlingTest
         Assert.Throws<ArgumentException>(() => sut.Roll(2));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Cannot_roll_after_bonus_rolls_for_strike()
     {
         var sut = new BowlingGame();
