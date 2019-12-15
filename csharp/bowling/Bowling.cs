@@ -4,14 +4,8 @@ using System.Linq;
 
 public class BowlingGame
 {
-    List<int> _rolls;
-    List<int> _frame;
-
-    public BowlingGame()
-    {
-        _rolls = new List<int>();
-        _frame = new List<int>();
-    }
+    List<int> _rolls = new List<int>();
+    List<int> _frame = new List<int>();
 
     public void Roll(int pins)
     {
@@ -48,16 +42,16 @@ public class BowlingGame
 
     private int NextFrame()
     {
-        var next = -1;
+        var next = -1; 
 
         if (_frame.Count > 0)
         {
-            var p = _frame.Count - 1;
-            var prevFrame = _frame[p];
+            var prev = _frame.Count - 1;
+            var prevFrame = _frame[prev];
 
-            if (prevFrame < 0)
+            if (prevFrame < 0)  // first roll in frame
             {
-                if (_rolls[p] == 10)
+                if (_rolls[prev] == 10) // strike rolled
                 {
                     next = --prevFrame;
                 }
@@ -105,14 +99,8 @@ public class BowlingGame
         return 0;
     }
 
-    private bool IsSpare(int r)
-    {
-        return _frame[r] > 0 && _rolls[r] + _rolls[r - 1] == 10;
-    }
+    private bool IsSpare(int r) => _frame[r] > 0 && _rolls[r] + _rolls[r - 1] == 10;
 
-    private bool IsStrike(int r)
-    {
-        return _frame[r] < 0 && _rolls[r] == 10;
-    }
+    private bool IsStrike(int r) => _frame[r] < 0 && _rolls[r] == 10;
 
 }
