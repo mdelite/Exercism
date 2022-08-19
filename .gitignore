@@ -5,3 +5,8 @@
 **/.vscode/*
 **/.vs
 *.sln
+
+**/venv/*
+**/.exercism/*
+**/__pycache__/*
+**/.pytest_cache/*
