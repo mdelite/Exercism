@@ -16,7 +16,13 @@ def value_of_card(card):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    face_cards = [ "J", "Q", "K" ]
+    if card in face_cards:
+        return 10
+    elif card == "A":
+        return 1
+    else:
+        return int(card)
 
 
 def higher_card(card_one, card_two):
@@ -30,7 +36,15 @@ def higher_card(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    val1 = value_of_card(card_one)
+    val2 = value_of_card(card_two)
+
+    if val1 == val2:
+        return (card_one, card_two)
+    elif val1 > val2:
+        return card_one
+    else:
+        return card_two
 
 
 def value_of_ace(card_one, card_two):
@@ -45,7 +59,6 @@ def value_of_ace(card_one, card_two):
     """
 
     pass
-
 
 def is_blackjack(card_one, card_two):
     """Determine if the hand is a 'natural' or 'blackjack'.
