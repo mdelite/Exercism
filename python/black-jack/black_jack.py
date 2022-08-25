@@ -18,10 +18,9 @@ def value_of_card(card):
 
     if card in "JQK":
         return 10
-    elif card == "A":
+    if card == "A":
         return 1
-    else:
-        return int(card)
+    return int(card)
 
 
 def higher_card(card_one, card_two):
@@ -40,10 +39,9 @@ def higher_card(card_one, card_two):
 
     if val1 == val2:
         return (card_one, card_two)
-    elif val1 > val2:
+    if val1 > val2:
         return card_one
-    else:
-        return card_two
+    return card_two
 
 
 def value_of_ace(card_one, card_two):
@@ -61,8 +59,7 @@ def value_of_ace(card_one, card_two):
 
     if val < 11:
         return 11
-    else:
-        return 1
+    return 1
 
 def value_of_hand(card_one, card_two):
     """Determine the value of the hand
