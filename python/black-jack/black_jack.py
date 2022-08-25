@@ -57,8 +57,22 @@ def value_of_ace(card_one, card_two):
     2.  'A' (ace card) = 11 (if already in hand)
     3.  '2' - '10' = numerical value.
     """
+    
+    val = value_of_hand(card_one, card_two) 
 
-    pass
+    if val < 11:
+        return 11
+    else:
+        return 1
+        
+def value_of_hand(card_one, card_two):
+    val = 0
+    for card in [card_one, card_two]:
+        if card == "A" and val < 11:
+            val += 11
+        else:
+            val += value_of_card(card)
+    return val    
 
 def is_blackjack(card_one, card_two):
     """Determine if the hand is a 'natural' or 'blackjack'.
@@ -71,7 +85,7 @@ def is_blackjack(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    return value_of_hand(card_one, card_two) == 21
 
 
 def can_split_pairs(card_one, card_two):
@@ -81,7 +95,7 @@ def can_split_pairs(card_one, card_two):
     :return: bool - can the hand be split into two pairs? (i.e. cards are of the same value).
     """
 
-    pass
+    return value_of_card(card_one) == value_of_card(card_two)
 
 
 def can_double_down(card_one, card_two):
@@ -91,4 +105,9 @@ def can_double_down(card_one, card_two):
     :return: bool - can the hand can be doubled down? (i.e. totals 9, 10 or 11 points).
     """
 
-    pass
+    total = value_of_hand(card_one, card_two)
+    if [card_one, card_two].count("A") == 1:
+        total -= 10
+    return total >= 9 and total <= 11
+    
+
