@@ -7,6 +7,6 @@
 *.sln
 
 **/venv/*
-**/.exercism/*
+# **/.exercism/*
 **/__pycache__/*
 **/.pytest_cache/*
