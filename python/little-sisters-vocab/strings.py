@@ -55,7 +55,4 @@ def adjective_to_verb(sentence, index):
     """
 
     words = sentence.split()
-    verb = words[index]
-    if verb.endswith("."):
-        verb = verb[:-1]
-    return verb + "en"
+    return words[index].strip(".") + "en"
