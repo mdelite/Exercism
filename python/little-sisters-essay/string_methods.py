@@ -8,10 +8,7 @@ def capitalize_title(title):
     :return: str - title string in title case (first letters capitalized).
     """
 
-    capitalized_words = []
-    for word in title.split():
-        capitalized_words.append(word.capitalize())
-    return " ".join(capitalized_words)
+    return title.title()
 
 
 def check_sentence_ending(sentence):
@@ -21,7 +18,7 @@ def check_sentence_ending(sentence):
     :return: bool - return True if punctuated correctly with period, False otherwise.
     """
 
-    return sentence[-1] == "."
+    return sentence.endswith(".")
 
 
 def clean_up_spacing(sentence):
