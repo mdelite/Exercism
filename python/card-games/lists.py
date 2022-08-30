@@ -43,12 +43,7 @@ def card_average(hand):
     :return: float - average value of the cards in the hand.
     """
 
-    card_count = 0
-    hand_sum = 0
-    for card in hand:
-        hand_sum += card
-        card_count += 1
-    return hand_sum / card_count
+    return sum(hand) / len(hand)
 
 def approx_average_is_average(hand):
     """Return if an average is using (first + last index values ) OR
