@@ -43,15 +43,16 @@ def card_average(hand):
     :return: float - average value of the cards in the hand.
     """
 
-    c = 0
-    sum = 0
+    card_count = 0
+    hand_sum = 0
     for card in hand:
-        sum += card
-        c += 1
-    return sum / c
+        hand_sum += card
+        card_count += 1
+    return hand_sum / card_count
 
 def approx_average_is_average(hand):
-    """Return if an average is using (first + last index values ) OR ('middle' card) == calculated average.
+    """Return if an average is using (first + last index values ) OR
+    ('middle' card) == calculated average.
 
     :param hand: list - cards in hand.
     :return: bool - does one of the approximate averages equal the `true average`?
@@ -60,7 +61,7 @@ def approx_average_is_average(hand):
     first_last = (hand[0] + hand[-1]) / 2
     middle = hand[len(hand) // 2]
     average = card_average(hand)
-    return first_last == average or middle == average
+    return average in (first_last, middle)
 
 
 def average_even_is_average_odd(hand):
@@ -70,7 +71,7 @@ def average_even_is_average_odd(hand):
     :return: bool - are even and odd averages equal?
     """
 
-    pass
+    return card_average(hand[::2]) == card_average(hand[1::2])
 
 
 def maybe_double_last(hand):
@@ -80,4 +81,6 @@ def maybe_double_last(hand):
     :return: list - hand with Jacks (if present) value doubled.
     """
 
-    pass
+    if hand[-1] == 11:
+        hand[-1] = 22
+    return hand
