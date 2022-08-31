@@ -11,7 +11,7 @@ def get_rounds(number):
     :return: list - current round and the two that follow.
     """
 
-    return [number, number + 1, number + 2]
+    return [number + i for i in range(3)]
 
 
 def concatenate_rounds(rounds_1, rounds_2):
@@ -77,5 +77,5 @@ def maybe_double_last(hand):
     """
 
     if hand[-1] == 11:
-        hand[-1] = 22
+        hand[-1] = hand[-1] * 2
     return hand
