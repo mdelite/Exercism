@@ -26,10 +26,7 @@ def find_my_friend(queue, friend_name):
     :return: int - index at which the friends name was found.
     """
 
-    for index, value in enumerate(queue):
-        if value == friend_name:
-            return index
-    return None
+    return queue.index(friend_name)
 
 
 def add_me_with_my_friends(queue, index, person_name):
@@ -75,7 +72,7 @@ def remove_the_last_person(queue):
     :return: str - name that has been removed from the end of the queue.
     """
 
-    return queue.pop(-1)
+    return queue.pop()
 
 
 def sorted_names(queue):
