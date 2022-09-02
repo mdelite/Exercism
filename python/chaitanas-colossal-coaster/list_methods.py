@@ -29,7 +29,7 @@ def find_my_friend(queue, friend_name):
     for index, value in enumerate(queue):
         if value == friend_name:
             return index
-    pass
+    return None
 
 
 def add_me_with_my_friends(queue, index, person_name):
