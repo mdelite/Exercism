@@ -56,8 +56,8 @@ def letter_grades(highest):
             86 <= "A" <= 100
     """
 
-    pass
-
+    return list(range(41, highest, round((highest - 41) / 4)))
+    
 
 def student_ranking(student_scores, student_names):
     """Organize the student's rank, name, and grade information in ascending order.
