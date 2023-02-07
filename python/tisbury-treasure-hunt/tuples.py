@@ -22,7 +22,11 @@ def convert_coordinate(coordinate):
 
 
 def compare_records(azara_record, rui_record):
-    """Compare two record types and determine if their coordinates match. :param azara_record: tuple - a (treasure, coordinate) pair. :param rui_record: tuple - a (location, tuple(coordinate_1, coordinate_2), quadrant) trio. :return: bool - do the coordinates match? """
+    """Compare two record types and determine if their coordinates match.
+
+    :param azara_record: tuple - a (treasure, coordinate) pair.
+    :param rui_record: tuple - a (location, tuple(coordinate_1, coordinate_2), quadrant) trio.
+    :return: bool - do the coordinates match? """
 
     return convert_coordinate(get_coordinate(azara_record)) == rui_record[1]
 
@@ -32,13 +36,14 @@ def create_record(azara_record, rui_record):
 
     :param azara_record: tuple - a (treasure, coordinate) pair.
     :param rui_record: tuple - a (location, coordinate, quadrant) trio.
-    :return: tuple or str - the combined record (if compatible), or the string "not a match" (if incompatible).
+    :return: tuple or str - the combined record (if compatible), or the string
+        "not a match" (if incompatible).
     """
 
     if compare_records(azara_record, rui_record):
         return azara_record + rui_record
-    else:
-        return "not a match"
+
+    return "not a match"
 
 
 def clean_up(combined_record_group):
@@ -54,5 +59,5 @@ def clean_up(combined_record_group):
 
     output = """"""
     for record in combined_record_group:
-       output += f"('{record[0]}', '{record[2]}', {record[3]}, '{record[4]}')\n" 
+        output += f"('{record[0]}', '{record[2]}', {record[3]}, '{record[4]}')\n"
     return output + """"""
