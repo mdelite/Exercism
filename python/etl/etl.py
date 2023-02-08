@@ -1,2 +1,6 @@
 def transform(legacy_data):
-    pass
+    scores = {}
+    for val, letters in legacy_data.items():
+        for letter in letters:
+            scores[letter.lower()] = val
+    return scores
