@@ -2,13 +2,13 @@
 
 
 # TODO: define the 'get_list_of_wagons' function
-def get_list_of_wagons():
+def get_list_of_wagons(*args):
     """Return a list of wagons.
 
     :param: arbitrary number of wagons.
     :return: list - list of wagons.
     """
-    pass
+    return [*args]
 
 
 # TODO: define the 'fixListOfWagons()' function
@@ -19,7 +19,8 @@ def fix_list_of_wagons(each_wagons_id, missing_wagons):
     :parm missing_wagons: list - the list of missing wagons.
     :return: list - list of wagons.
     """
-    pass
+    x, y, engine, *cars = each_wagons_id
+    return [engine, *missing_wagons, *cars, x, y ]
 
 
 # TODO: define the 'add_missing_stops()' function
