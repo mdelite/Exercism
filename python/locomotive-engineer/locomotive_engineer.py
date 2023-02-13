@@ -24,14 +24,16 @@ def fix_list_of_wagons(each_wagons_id, missing_wagons):
 
 
 # TODO: define the 'add_missing_stops()' function
-def add_missing_stops():
+def add_missing_stops(route, stops):
     """Add missing stops to route dict.
 
     :param route: dict - the dict of routing information.
     :param: arbitrary number of stops.
     :return: dict - updated route dictionary.
     """
-    pass
+    stop_list = stops.values() 
+    stops = {"stops": stop_list}
+    return {**route, **stops}
 
 
 # TODO: define the 'extend_route_information()' function
